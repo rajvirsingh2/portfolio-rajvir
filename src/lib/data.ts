@@ -61,6 +61,7 @@ export const projects: Project[] = [
       "Custom design system from wireframes to release",
       "Dagger DI with Clean Architecture",
     ],
+    githubUrl: "https://github.com/rajvirsingh2/Twaran-25",
     accent: "139, 92, 246",
     period: "Jan – Mar 2025",
   },
