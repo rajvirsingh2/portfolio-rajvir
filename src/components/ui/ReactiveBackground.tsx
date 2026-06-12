@@ -82,11 +82,11 @@ export function MouseGlow() {
       const dy = e.clientY - last.y;
       last = { x: e.clientX, y: e.clientY };
       setPos(last);
-      setDir({ x: clamp(dx * 0.4, 3), y: clamp(dy * 0.4, 3), tilt: clamp(dx * 0.9, 16) });
+      setDir({ x: clamp(dx * 0.2, 3), y: clamp(dy * 0.2, 3), tilt: clamp(dx * 0.3, 12) });
 
       // Shake detection: sustained high speed sends the blob on a trip
-      speedEma = speedEma * 0.75 + Math.hypot(dx, dy) * 0.25;
-      if (speedEma > 55 && !tripActive) {
+      speedEma = speedEma * 0.8 + Math.hypot(dx, dy) * 0.2;
+      if (speedEma > 120 && !tripActive) {
         tripActive = true;
         setTripping(true);
         setTimeout(() => {
@@ -135,7 +135,7 @@ export function MouseGlow() {
         transition={
           tripping
             ? { duration: 0.9, repeat: Infinity, ease: "easeInOut" }
-            : { type: "spring", stiffness: 160, damping: 14, mass: 0.3 }
+            : { type: "spring", stiffness: 120, damping: 18, mass: 0.4 }
         }
       >
         {/* Blob body */}
