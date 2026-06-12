@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, BrainCircuit, Network, Zap } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { TerminalSnippet } from "@/components/ui/TerminalSnippet";
 
 const container = {
@@ -81,80 +81,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Research / ML Section */}
-      <section className="relative py-32 border-t border-white/5 bg-[#0a0f1a]/50">
-        <div className="max-w-6xl mx-auto px-6 w-full">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            
-            {/* Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono font-medium mb-6">
-                <BrainCircuit className="w-3.5 h-3.5" /> Academic Research
-              </div>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-6">Deepfake Detection via Continual Learning</h2>
-              <p className="text-white/50 text-lg leading-relaxed mb-8">
-                Developed an adaptive Machine Learning pipeline designed to detect highly sophisticated, evolving deepfake variants. 
-                By leveraging continual learning techniques, the model actively mitigates catastrophic forgetting, ensuring robust accuracy on both legacy and emerging spoofing methods.
-              </p>
-              
-              <ul className="space-y-4 font-mono text-sm text-white/70 mb-10">
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-emerald-400" /> PyTorch & TensorFlow backend</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-emerald-400" /> Real-time facial artifact analysis</li>
-                <li className="flex items-center gap-3"><Zap className="w-4 h-4 text-emerald-400" /> Efficient Net & Vision Transformers</li>
-              </ul>
-
-              <Link href="/projects/deepfake-detection" data-hover className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium transition-colors">
-                Read the Case Study <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-
-            {/* Abstract Geometric Visual */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1 }}
-              className="relative aspect-square md:aspect-[4/3] lg:aspect-square w-full max-w-md mx-auto"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-emerald-500/5 rounded-full blur-3xl" />
-              <div className="absolute inset-0 rounded-3xl border border-white/10 bg-[#0d1117]/80 backdrop-blur-xl flex items-center justify-center overflow-hidden shadow-2xl">
-                {/* Abstract Node Network */}
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <Network className="w-32 h-32 text-blue-500/20 absolute" />
-                  
-                  {/* Floating geometric nodes */}
-                  {[...Array(6)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      animate={{ 
-                        y: [0, (i * 17) % 40 - 20, 0],
-                        x: [0, (i * 23) % 40 - 20, 0],
-                      }}
-                      transition={{ 
-                        duration: 4 + ((i * 13) % 4), 
-                        repeat: Infinity,
-                        ease: "easeInOut" 
-                      }}
-                      className="absolute w-3 h-3 rounded-full bg-blue-400/80 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-                      style={{
-                        left: `${20 + ((i * 31) % 60)}%`,
-                        top: `${20 + ((i * 37) % 60)}%`,
-                      }}
-                    />
-                  ))}
-                  
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0d1117_100%)] opacity-60 pointer-events-none" />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
