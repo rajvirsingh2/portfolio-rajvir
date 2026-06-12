@@ -69,6 +69,9 @@ function easterEgg(cmd: string): TerminalLine[] | null {
   if (cmd === "arshpreet") {
     return [{ text: "She's in Rajvir's heart ❤️", type: "success" }];
   }
+  if (cmd === "anupam") {
+    return [{ text: "he is purav ka chaatne wala", type: "output" }];
+  }
   if (cmd === "vim" || cmd === "vi") {
     return [{ text: "Entering vim... good luck exiting. (:q! works here, promise)", type: "output" }];
   }
