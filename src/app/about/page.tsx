@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { skills } from "@/lib/data";
+import { GraduationCap, Smartphone, Server, Container, BrainCircuit, Wrench } from "lucide-react";
 import {
   SiKotlin, SiAndroid, SiGo, SiPostgresql, SiRedis, SiDocker,
   SiKubernetes, SiPython, SiPytorch,
@@ -10,38 +11,30 @@ import {
 import { FaJava, FaAws } from "react-icons/fa";
 import { TbApi } from "react-icons/tb";
 
-const categoryLabels: Record<string, string> = {
-  mobile: "mobile",
-  backend: "backend",
-  devops: "devops & cloud",
-  ml: "machine learning",
-  tools: "tools",
+const card = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.15 + i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+  }),
 };
 
-const categoryOrder = ["mobile", "backend", "devops", "ml", "tools"];
+// Degree progress: Nov 2022 -> May 2027
+const DEGREE_START = new Date(2022, 10);
+const DEGREE_END = new Date(2027, 4);
+const degreePct = Math.min(
+  99,
+  Math.round(((Date.now() - DEGREE_START.getTime()) / (DEGREE_END.getTime() - DEGREE_START.getTime())) * 100)
+);
 
-const asciiLogo = `██████╗ ███████╗
-██╔══██╗██╔════╝
-██████╔╝███████╗
-██╔══██╗╚════██║
-██║  ██║███████║
-╚═╝  ╚═╝╚══════╝`;
-
-const fetchRows: [string, string][] = [
-  ["OS", "RajvirOS 21 LTS (Human Edition)"],
-  ["Host", "IIIT Gwalior — Integrated B.Tech+M.Tech IT"],
-  ["Kernel", "6.2.0-backend-android-ml"],
-  ["Uptime", "since Nov 2022 — zero reboots, some crashes"],
-  ["Shell", "kotlin 2.x · go 1.22 · python 3.12"],
-  ["Packages", "16 core skills · 26 public repos (apt: github)"],
-  ["DE", "Jetpack Compose (dark, always)"],
-  ["Theme", "OLED black + emerald accent"],
-  ["CPU", "Caffeine-OC @ 5.0 GHz (thermal limit: exams)"],
-  ["GPU", "PyTorch/CUDA — deepfakes fear it (98.9% acc)"],
-  ["Memory", "leaks only into side projects"],
+const stackGroups: { key: string; label: string; icon: React.ElementType; accent: string; span?: string }[] = [
+  { key: "mobile", label: "Mobile", icon: Smartphone, accent: "#3DDC84" },
+  { key: "backend", label: "Backend", icon: Server, accent: "#60a5fa", span: "md:col-span-2" },
+  { key: "devops", label: "DevOps & Cloud", icon: Container, accent: "#38bdf8" },
+  { key: "ml", label: "Machine Learning", icon: BrainCircuit, accent: "#f472b6" },
+  { key: "tools", label: "Tools", icon: Wrench, accent: "#fbbf24" },
 ];
-
-const palette = ["#ef4444", "#f59e0b", "#22c55e", "#34d399", "#06b6d4", "#3b82f6", "#8b5cf6", "#ec4899"];
 
 export default function AboutPage() {
   return (
@@ -54,136 +47,153 @@ export default function AboutPage() {
       </motion.span>
       <motion.h1
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-        className="font-display text-5xl md:text-6xl font-bold tracking-tighter text-gradient mb-6"
+        className="font-display text-5xl md:text-6xl font-bold tracking-tighter text-gradient mb-14"
       >
         About Me
       </motion.h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="text-lg text-white/55 leading-relaxed max-w-3xl mb-14"
-      >
-        Integrated B.Tech+M.Tech in Information Technology at IIIT Gwalior (May 2027).
-        I build scalable distributed systems, lead mobile development teams, and research
-        continual learning to combat evolving deepfake threats.
-      </motion.p>
+      {/* Bento grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14">
+        {/* Identity — wide */}
+        <motion.div
+          variants={card} initial="hidden" animate="visible" custom={0}
+          className="md:col-span-2 rounded-2xl card-surface p-8 relative overflow-hidden transition-colors duration-300"
+        >
+          <div className="absolute top-0 right-0 w-[260px] h-[260px] rounded-full blur-[110px] bg-emerald-500/[0.07] pointer-events-none" aria-hidden />
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4 leading-snug">
+            Builds systems that scale,
+            <br />
+            <span className="text-gradient-accent">teams that ship.</span>
+          </h2>
+          <p className="text-white/55 leading-relaxed max-w-xl">
+            Integrated B.Tech+M.Tech in Information Technology at IIIT Gwalior.
+            I design distributed backends, lead mobile development teams, and research
+            continual learning to combat evolving deepfake threats.
+          </p>
+        </motion.div>
 
-      {/* Neofetch card */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
-        className="rounded-xl overflow-hidden bg-[#0d1117] border border-white/10 shadow-2xl shadow-emerald-500/[0.04] mb-16"
-      >
-        <div className="flex items-center px-4 py-3 bg-[#161b22] border-b border-white/5">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500/80" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+        {/* Accuracy stat */}
+        <motion.div
+          variants={card} initial="hidden" animate="visible" custom={1}
+          className="rounded-2xl card-surface p-8 flex flex-col justify-between transition-colors duration-300 group"
+          data-hover
+        >
+          <span className="text-xs font-semibold uppercase tracking-wider text-white/35">Thesis result</span>
+          <div>
+            <div className="font-display text-5xl font-bold text-gradient-accent tracking-tight group-hover:text-glow-accent transition-all duration-300">98.9%</div>
+            <p className="text-sm text-white/45 mt-2 leading-snug">deepfake detection accuracy with A-GEM continual learning</p>
           </div>
-          <div className="ml-4 text-xs font-mono text-white/40">guest@rajvir-portfolio:~/about</div>
-        </div>
+        </motion.div>
 
-        <div className="p-5 sm:p-7 font-mono text-[13px] leading-relaxed overflow-x-auto">
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-            className="text-blue-400 mb-5"
-          >
-            $ neofetch rajvir
-          </motion.div>
+        {/* Education + progress */}
+        <motion.div
+          variants={card} initial="hidden" animate="visible" custom={2}
+          className="rounded-2xl card-surface p-8 transition-colors duration-300"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center">
+              <GraduationCap className="w-5 h-5 text-blue-400" />
+            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-white/35">Education</span>
+          </div>
+          <h3 className="text-white/85 font-medium leading-snug mb-1">IIIT Gwalior</h3>
+          <p className="text-sm text-white/45 mb-5">Integrated B.Tech + M.Tech, IT</p>
+          <div className="flex items-center justify-between text-xs text-white/35 mb-2">
+            <span>2022</span>
+            <span className="text-emerald-300/90 font-semibold">{degreePct}% complete</span>
+            <span>2027</span>
+          </div>
+          <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${degreePct}%` }}
+              transition={{ delay: 0.6, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-blue-500"
+            />
+          </div>
+        </motion.div>
 
-          <div className="flex flex-col md:flex-row gap-8">
-            {/* ASCII logo */}
-            <motion.pre
-              initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}
-              className="text-emerald-400/90 text-[11px] sm:text-xs leading-tight select-none flex-shrink-0"
-              aria-hidden
+        {/* Amazon MLSS */}
+        <motion.div
+          variants={card} initial="hidden" animate="visible" custom={3}
+          className="rounded-2xl card-surface p-8 flex flex-col justify-between transition-colors duration-300 group"
+          data-hover
+        >
+          <span className="text-xs font-semibold uppercase tracking-wider text-white/35">Selection</span>
+          <div>
+            <div className="font-display text-5xl font-bold text-white tracking-tight group-hover:text-glow-accent transition-all duration-300">
+              Top 3.7<span className="text-2xl align-top">%</span>
+            </div>
+            <p className="text-sm text-white/45 mt-2 leading-snug">Amazon ML Summer School &apos;25 — 3,000 picked from 80,000+ applicants</p>
+          </div>
+        </motion.div>
+
+        {/* By the numbers */}
+        <motion.div
+          variants={card} initial="hidden" animate="visible" custom={4}
+          className="rounded-2xl card-surface p-8 transition-colors duration-300"
+        >
+          <span className="text-xs font-semibold uppercase tracking-wider text-white/35 block mb-5">By the numbers</span>
+          <dl className="space-y-4">
+            {[
+              ["26", "public repos on GitHub"],
+              ["4", "engineers led to a shipped app"],
+              ["6", "CL strategies benchmarked"],
+            ].map(([n, label]) => (
+              <div key={label} className="flex items-baseline gap-3">
+                <dt className="font-display text-2xl font-bold text-white w-10 flex-shrink-0">{n}</dt>
+                <dd className="text-sm text-white/45">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </motion.div>
+      </div>
+
+      {/* Tech stack — category cards */}
+      <motion.h2
+        initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+        className="font-display text-2xl font-bold text-white mb-8 tracking-tight"
+      >
+        Tech Stack
+      </motion.h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {stackGroups.map((group, gi) => {
+          const items = skills.filter((s) => s.category === group.key);
+          if (items.length === 0) return null;
+          const GroupIcon = group.icon;
+          return (
+            <motion.div
+              key={group.key}
+              variants={card} initial="hidden" animate="visible" custom={5 + gi}
+              className={`rounded-2xl card-surface p-6 transition-colors duration-300 ${group.span ?? ""}`}
             >
-              {asciiLogo}
-            </motion.pre>
-
-            {/* Info rows */}
-            <div className="flex-1 min-w-0">
-              <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}
-                className="mb-2"
-              >
-                <span className="text-emerald-400 font-bold">rajvir</span>
-                <span className="text-white/40">@</span>
-                <span className="text-blue-400 font-bold">portfolio</span>
-                <div className="text-white/20">{"─".repeat(18)}</div>
-              </motion.div>
-
-              <div className="space-y-1">
-                {fetchRows.map(([k, v], i) => (
-                  <motion.div
-                    key={k}
-                    initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.6 + i * 0.06 }}
-                    className="flex gap-2 group cursor-default"
+              <div className="flex items-center gap-3 mb-5">
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center border"
+                  style={{ background: `${group.accent}14`, borderColor: `${group.accent}33`, color: group.accent }}
+                >
+                  <GroupIcon className="w-4 h-4" />
+                </div>
+                <h3 className="font-display font-semibold text-white/85">{group.label}</h3>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {items.map((skill) => (
+                  <motion.span
+                    key={skill.name}
+                    whileHover={{ y: -3 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    className="inline-flex items-center gap-2 pl-2.5 pr-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm text-white/60 hover:text-white/90 hover:border-white/[0.2] hover:bg-white/[0.06] transition-colors duration-200 cursor-default"
                     data-hover
                   >
-                    <span className="text-emerald-400/90 font-bold w-[4.5rem] sm:w-20 flex-shrink-0">{k}</span>
-                    <span className="text-white/55 group-hover:text-white/85 transition-colors duration-200">{v}</span>
-                  </motion.div>
+                    <SkillIcon name={skill.name} />
+                    {skill.name}
+                  </motion.span>
                 ))}
               </div>
-
-              {/* Palette swatches */}
-              <motion.div
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.35 }}
-                className="flex gap-1.5 mt-5"
-                aria-hidden
-              >
-                {palette.map((c) => (
-                  <span key={c} className="w-5 h-3 rounded-[2px]" style={{ background: c }} />
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Skills grouped by category */}
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-      >
-        <h2 className="font-display text-2xl font-bold text-white mb-2 tracking-tight">Tech Stack</h2>
-        <p className="font-mono text-xs text-white/30 mb-8">$ pkg list --installed --by-category</p>
-        <div className="space-y-10">
-          {categoryOrder.map((cat, ci) => {
-            const items = skills.filter((s) => s.category === cat);
-            if (items.length === 0) return null;
-            return (
-              <div key={cat}>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-white/35">{categoryLabels[cat]}</span>
-                  <div className="flex-1 h-px hairline opacity-50" aria-hidden />
-                  <span className="font-mono text-[10px] text-white/20">{items.length} pkg{items.length > 1 ? "s" : ""}</span>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {items.map((skill, i) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.35 + ci * 0.08 + i * 0.03 }}
-                      className="group flex items-center gap-3 px-4 py-3.5 rounded-xl card-surface transition-all duration-300 cursor-default"
-                      data-hover
-                    >
-                      <motion.div
-                        className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center transition-colors duration-300"
-                        whileHover={{ scale: 1.12, rotate: 4 }}
-                      >
-                        <SkillIcon name={skill.name} />
-                      </motion.div>
-                      <span className="text-sm font-medium text-white/60 group-hover:text-white/90 transition-colors duration-200">{skill.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </motion.div>
+            </motion.div>
+          );
+        })}
+      </div>
     </div>
   );
 }
