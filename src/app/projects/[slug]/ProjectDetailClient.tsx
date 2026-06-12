@@ -20,7 +20,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         {/* Header Text */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="md:w-3/5 relative z-10">
           <span className="text-[10px] uppercase tracking-widest font-bold text-white/20 mb-3 block font-mono">{project.period}</span>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-gradient mb-3">{project.title}</h1>
+          <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tighter text-gradient mb-3">{project.title}</h1>
           <p className="text-lg font-medium mb-8" style={{ color: `rgba(${project.accent}, 0.7)` }}>{project.tagline}</p>
         
           {/* Action buttons */}
@@ -216,9 +216,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
       {/* Highlights */}
       <motion.div
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-        className="rounded-2xl bg-[#0a0a0a] border border-white/[0.06] p-8 mb-16"
+        className="rounded-2xl card-surface p-8 mb-16"
       >
-        <h2 className="text-xl font-bold text-white mb-6">Key Highlights</h2>
+        <h2 className="font-display text-xl font-bold text-white mb-6">Key Highlights</h2>
         <div className="space-y-4">
           {project.highlights.map((h, i) => (
             <motion.div
@@ -237,7 +237,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
       {/* Tech Stack */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
-        <h2 className="text-xl font-bold text-white mb-6">Tech Stack</h2>
+        <h2 className="font-display text-xl font-bold text-white mb-6">Tech Stack</h2>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t, i) => (
             <motion.span

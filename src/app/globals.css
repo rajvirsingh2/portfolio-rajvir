@@ -3,14 +3,17 @@
 @theme {
   --color-background: #09090b;
   --color-foreground: #ededed;
+  --color-accent: #34d399;
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
 }
 
 @layer base {
   :root {
     --background: #09090b;
     --foreground: #ffffff;
+    --accent: #34d399;
   }
 
   html {
@@ -26,6 +29,30 @@
     overflow-x: hidden;
   }
 
+  ::selection {
+    background: rgba(52, 211, 153, 0.25);
+    color: #ffffff;
+  }
+
+  /* Visible focus for keyboard nav (a11y) */
+  :focus-visible {
+    outline: 2px solid rgba(52, 211, 153, 0.7);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 4px;
@@ -35,6 +62,7 @@
   }
   ::-webkit-scrollbar-thumb {
     background: rgba(255,255,255,0.1);
+    border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255,255,255,0.2);
@@ -42,22 +70,57 @@
 }
 
 @layer utilities {
+  .font-display {
+    font-family: var(--font-display), var(--font-inter), system-ui, sans-serif;
+  }
+
   .glass {
-    background: rgba(0,0,0,0.5);
+    background: rgba(9, 9, 11, 0.6);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Dot grid backdrop with radial fade */
+  .bg-dots {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
+  }
+
+  /* Hairline gradient divider */
+  .hairline {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
   }
 
   /* Minimalist Text gradient */
   .text-gradient {
-    color: #ffffff;
-  }
-
-  .text-gradient-accent {
-    background: linear-gradient(135deg, #10b981, #3b82f6);
+    background: linear-gradient(180deg, #ffffff 60%, rgba(255,255,255,0.55));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(135deg, #34d399, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtle emerald glow for key text (OLED-friendly, minimal) */
+  .text-glow-accent {
+    text-shadow: 0 0 24px rgba(52, 211, 153, 0.35);
+  }
+
+  /* Card surface used across pages */
+  .card-surface {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012));
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .card-surface:hover {
+    border-color: rgba(255,255,255,0.14);
   }
 
   /* Shimmer */

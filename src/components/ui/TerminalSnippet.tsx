@@ -81,8 +81,8 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
       transition={{ duration: 0.8, delay: 0.8 }}
       className="w-full max-w-2xl mx-auto mt-16 text-left"
     >
-      <div 
-        className="rounded-xl overflow-hidden bg-[#0d1117] border border-white/10 shadow-2xl"
+      <div
+        className="rounded-xl overflow-hidden bg-[#0d1117] border border-white/10 shadow-2xl shadow-emerald-500/[0.04] hover:border-white/15 transition-colors duration-300"
         onClick={() => isInitialDone && inputRef.current?.focus()}
       >
         {/* Terminal Header */}

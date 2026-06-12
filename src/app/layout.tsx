@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { RobotBuddy } from "@/components/ui/RobotBuddy";
@@ -17,6 +17,12 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Rajvir Singh | Software Engineer",
@@ -29,12 +35,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} dark antialiased`} suppressHydrationWarning>
       <body className="bg-[#09090b] text-white min-h-screen">
         <Navbar />
         <ReactiveBackground />
         <MouseGlow />
-        <main className="pt-16">{children}</main>
+        <main className="pt-20">{children}</main>
         <RobotBuddy />
       </body>
     </html>
