@@ -12,6 +12,7 @@ const defaultLines: TerminalLine[] = [
   { text: "Education : ABV-Indian Institute of Information Technology", type: "output" },
   { text: "Degree    : Integrated B.Tech + M.Tech in IT", type: "output" },
   { text: "Timeline  : 2022 — 2027", type: "output" },
+  { text: "Roles     : [Software Engineer, Android Engineer, ML Researcher]", type: "output" },
   { text: "Skills    : [Go, Kotlin, Python, Next.js, PyTorch]", type: "output" },
   { text: "Status    : Ready to build scalable systems.", type: "success" },
   { text: "> Type a page name (e.g. 'projects', 'about', 'experience') and hit Enter to navigate.", type: "system" },
