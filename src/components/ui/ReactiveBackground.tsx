@@ -59,17 +59,28 @@ export function ReactiveBackground() {
 }
 
 /**
- * MouseGlow - A reactive glow that follows the cursor and expands on
- * interactive elements. Elements can set a `data-cursor` attribute to
- * show a playful terminal-style label pill next to the cursor.
+ * MouseGlow - A tiny blob "pet" that chases the cursor: tilts in the
+ * direction of travel, eyes track movement, blinks occasionally, and
+ * opens its mouth over interactive elements. Elements can set a
+ * `data-cursor` attribute to show a terminal-style label pill.
  */
 export function MouseGlow() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
+  const [dir, setDir] = useState({ x: 0, y: 0, tilt: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [blink, setBlink] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
 
   useEffect(() => {
-    const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
+    let last = { x: -100, y: -100 };
+    const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+    const move = (e: MouseEvent) => {
+      const dx = e.clientX - last.x;
+      const dy = e.clientY - last.y;
+      last = { x: e.clientX, y: e.clientY };
+      setPos(last);
+      setDir({ x: clamp(dx * 0.4, 3), y: clamp(dy * 0.4, 3), tilt: clamp(dx * 0.9, 16) });
+    };
     const over = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
       setIsHovering(
@@ -80,31 +91,58 @@ export function MouseGlow() {
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseover", over);
+
+    // Occasional blink
+    const blinkLoop = setInterval(() => {
+      setBlink(true);
+      setTimeout(() => setBlink(false), 140);
+    }, 3200);
+
     return () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mouseover", over);
+      clearInterval(blinkLoop);
     };
   }, []);
 
   return (
     <>
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[100] mix-blend-difference hidden lg:block"
+        className="pointer-events-none fixed top-0 left-0 z-[100] hidden lg:block"
         animate={{
-          x: pos.x - (isHovering ? 32 : 10),
-          y: pos.y - (isHovering ? 32 : 10),
+          x: pos.x + 14,
+          y: pos.y + 14,
+          rotate: dir.tilt,
+          scale: isHovering ? 1.35 : 1,
         }}
-        transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.1 }}
+        transition={{ type: "spring", stiffness: 160, damping: 14, mass: 0.3 }}
       >
-        <motion.div
-          animate={{
-            width: isHovering ? 64 : 20,
-            height: isHovering ? 64 : 20,
-            opacity: isHovering ? 0.3 : 0.8,
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="rounded-full bg-white"
-        />
+        {/* Blob body */}
+        <div className="relative w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 shadow-[0_2px_12px_rgba(52,211,153,0.45)] flex flex-col items-center justify-center">
+          {/* Eyes */}
+          <div className="flex gap-[5px]" style={{ transform: `translate(${dir.x}px, ${dir.y}px)` }}>
+            {[0, 1].map((eye) => (
+              <span key={eye} className="relative w-[7px] h-[7px] rounded-full bg-white flex items-center justify-center overflow-hidden">
+                <motion.span
+                  animate={{ scaleY: blink ? 0.1 : 1 }}
+                  transition={{ duration: 0.08 }}
+                  className="w-[3.5px] h-[3.5px] rounded-full bg-zinc-900"
+                  style={{ transform: `translate(${dir.x * 0.4}px, ${dir.y * 0.4}px)` }}
+                />
+              </span>
+            ))}
+          </div>
+          {/* Mouth: dot idle, open grin on hover */}
+          <motion.div
+            animate={
+              isHovering
+                ? { width: 8, height: 6, borderRadius: "0 0 8px 8px", marginTop: 2 }
+                : { width: 3, height: 2, borderRadius: 4, marginTop: 2 }
+            }
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            className="bg-zinc-900/80"
+          />
+        </div>
       </motion.div>
 
       {/* Terminal-style cursor label */}
@@ -113,7 +151,7 @@ export function MouseGlow() {
           <motion.div
             key={label}
             initial={{ opacity: 0, scale: 0.7, y: 6 }}
-            animate={{ opacity: 1, scale: 1, y: 0, x: pos.x + 22, top: pos.y + 18 }}
+            animate={{ opacity: 1, scale: 1, y: 0, x: pos.x + 50, top: pos.y + 22 }}
             exit={{ opacity: 0, scale: 0.7, y: 6 }}
             transition={{ type: "spring", stiffness: 350, damping: 25, mass: 0.3 }}
             className="pointer-events-none fixed left-0 top-0 z-[101] hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0d1117]/95 border border-emerald-400/30 shadow-[0_4px_20px_rgba(0,0,0,0.5)] font-mono text-[11px] text-emerald-300 whitespace-nowrap"
