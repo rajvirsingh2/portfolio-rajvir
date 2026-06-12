@@ -16,7 +16,7 @@ const defaultLines: TerminalLine[] = [
   { text: "Skills    : [Go, Kotlin, Python, Next.js, PyTorch]", type: "output" },
   { text: "Coffee    : [████████░░] 80% — refill scheduled", type: "output" },
   { text: "Status    : Ready to build scalable systems.", type: "success" },
-  { text: "> Type 'help' for commands, or a page name ('projects', 'about'...) to navigate.", type: "system" },
+  { text: "> Type 'rajvir' for the full story, 'help' for commands, or a page name to navigate.", type: "system" },
 ];
 
 const VALID_PAGES = ["about", "projects", "experience", "contact", "home"];
@@ -24,8 +24,25 @@ const VALID_PAGES = ["about", "projects", "experience", "contact", "home"];
 function easterEgg(cmd: string): TerminalLine[] | null {
   if (cmd === "help") {
     return [
-      { text: "Available: about | projects | experience | contact | home", type: "output" },
+      { text: "Available: rajvir | about | projects | experience | contact | home", type: "output" },
       { text: "Also try: whoami, ls, sudo, coffee, rm -rf /", type: "system" },
+    ];
+  }
+  if (cmd === "rajvir" || cmd === "./rajvir") {
+    return [
+      { text: "> Compiling human... done in 0.42s", type: "system" },
+      { text: "Name       : Rajvir Singh", type: "output" },
+      { text: "Class      : Software Engineer [lvl 21] — Backend / Android / ML", type: "output" },
+      { text: "Education  : IIIT Gwalior — Integrated B.Tech+M.Tech IT (2022—2027)", type: "output" },
+      { text: "Stack      : Kotlin · Go · Python · Jetpack Compose · PyTorch", type: "output" },
+      { text: "Achievement: Amazon ML Summer School '25 — top 3,000 of 80,000+ applicants", type: "success" },
+      { text: "Research   : Deepfake detection via Continual Learning — 98.9% acc (A-GEM)", type: "output" },
+      { text: "Flagship   : Ascend — Go + Redis Streams, <15ms quest completions,", type: "output" },
+      { text: "             self-hosted Phi-3 LoRA quest engine. Zero third-party AI APIs.", type: "output" },
+      { text: "GitHub     : 26 public repos, Kotlin-heavy. OSS: Wikipedia Android, Mifos.", type: "output" },
+      { text: "Leadership : Led 4-dev Android team; ran 10-person promo team (+20% turnout)", type: "output" },
+      { text: "Weakness   : Cannot leave a slow query unoptimized. It's a problem.", type: "output" },
+      { text: "Status     : Open to internships & freelance — type 'contact'", type: "success" },
     ];
   }
   if (cmd === "ls") {

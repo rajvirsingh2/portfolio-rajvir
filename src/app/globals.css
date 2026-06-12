@@ -198,4 +198,21 @@
   .animate-caret {
     animation: caret-blink 1.1s steps(1) infinite;
   }
+
+  /* Cursor-pet hallucination: rainbow cycle */
+  @keyframes hue-spin {
+    from { filter: hue-rotate(0deg) saturate(1.5); }
+    to { filter: hue-rotate(360deg) saturate(1.5); }
+  }
+  .animate-trip {
+    animation: hue-spin 0.7s linear infinite;
+  }
+
+  /* Spiral pupil spin */
+  @keyframes pupil-spin {
+    to { transform: rotate(360deg); }
+  }
+  .animate-pupil-spin {
+    animation: pupil-spin 0.5s linear infinite;
+  }
 }

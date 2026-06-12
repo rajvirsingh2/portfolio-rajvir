@@ -69,10 +69,13 @@ export function MouseGlow() {
   const [dir, setDir] = useState({ x: 0, y: 0, tilt: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [blink, setBlink] = useState(false);
+  const [tripping, setTripping] = useState(false);
   const [label, setLabel] = useState<string | null>(null);
 
   useEffect(() => {
     let last = { x: -100, y: -100 };
+    let speedEma = 0;
+    let tripActive = false;
     const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
     const move = (e: MouseEvent) => {
       const dx = e.clientX - last.x;
@@ -80,6 +83,18 @@ export function MouseGlow() {
       last = { x: e.clientX, y: e.clientY };
       setPos(last);
       setDir({ x: clamp(dx * 0.4, 3), y: clamp(dy * 0.4, 3), tilt: clamp(dx * 0.9, 16) });
+
+      // Shake detection: sustained high speed sends the blob on a trip
+      speedEma = speedEma * 0.75 + Math.hypot(dx, dy) * 0.25;
+      if (speedEma > 55 && !tripActive) {
+        tripActive = true;
+        setTripping(true);
+        setTimeout(() => {
+          tripActive = false;
+          speedEma = 0;
+          setTripping(false);
+        }, 3000);
+      }
     };
     const over = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
@@ -105,6 +120,8 @@ export function MouseGlow() {
     };
   }, []);
 
+  const shownLabel = tripping ? "reality.exe not responding" : label;
+
   return (
     <>
       <motion.div
@@ -112,34 +129,52 @@ export function MouseGlow() {
         animate={{
           x: pos.x + 14,
           y: pos.y + 14,
-          rotate: dir.tilt,
-          scale: isHovering ? 1.35 : 1,
+          rotate: tripping ? [0, -24, 24, -16, 16, -8, 8, 0] : dir.tilt,
+          scale: tripping ? [1, 1.25, 0.9, 1.2, 1] : isHovering ? 1.35 : 1,
         }}
-        transition={{ type: "spring", stiffness: 160, damping: 14, mass: 0.3 }}
+        transition={
+          tripping
+            ? { duration: 0.9, repeat: Infinity, ease: "easeInOut" }
+            : { type: "spring", stiffness: 160, damping: 14, mass: 0.3 }
+        }
       >
         {/* Blob body */}
-        <div className="relative w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 shadow-[0_2px_12px_rgba(52,211,153,0.45)] flex flex-col items-center justify-center">
+        <div className={`relative w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 shadow-[0_2px_12px_rgba(52,211,153,0.45)] flex flex-col items-center justify-center ${tripping ? "animate-trip" : ""}`}>
           {/* Eyes */}
           <div className="flex gap-[5px]" style={{ transform: `translate(${dir.x}px, ${dir.y}px)` }}>
             {[0, 1].map((eye) => (
               <span key={eye} className="relative w-[7px] h-[7px] rounded-full bg-white flex items-center justify-center overflow-hidden">
-                <motion.span
-                  animate={{ scaleY: blink ? 0.1 : 1 }}
-                  transition={{ duration: 0.08 }}
-                  className="w-[3.5px] h-[3.5px] rounded-full bg-zinc-900"
-                  style={{ transform: `translate(${dir.x * 0.4}px, ${dir.y * 0.4}px)` }}
-                />
+                {tripping ? (
+                  /* Spiral pupil while hallucinating */
+                  <span
+                    className="w-[6px] h-[6px] rounded-full animate-pupil-spin"
+                    style={{ background: "conic-gradient(#18181b 0 25%, transparent 25% 50%, #18181b 50% 75%, transparent 75%)" }}
+                  />
+                ) : (
+                  <motion.span
+                    animate={{ scaleY: blink ? 0.1 : 1 }}
+                    transition={{ duration: 0.08 }}
+                    className="w-[3.5px] h-[3.5px] rounded-full bg-zinc-900"
+                    style={{ transform: `translate(${dir.x * 0.4}px, ${dir.y * 0.4}px)` }}
+                  />
+                )}
               </span>
             ))}
           </div>
-          {/* Mouth: dot idle, open grin on hover */}
+          {/* Mouth: dot idle, grin on hover, wavy gape mid-trip */}
           <motion.div
             animate={
-              isHovering
-                ? { width: 8, height: 6, borderRadius: "0 0 8px 8px", marginTop: 2 }
-                : { width: 3, height: 2, borderRadius: 4, marginTop: 2 }
+              tripping
+                ? { width: 7, height: 7, borderRadius: "40% 60% 55% 45%", marginTop: 1, rotate: [0, 180, 360] }
+                : isHovering
+                ? { width: 8, height: 6, borderRadius: "0 0 8px 8px", marginTop: 2, rotate: 0 }
+                : { width: 3, height: 2, borderRadius: 4, marginTop: 2, rotate: 0 }
             }
-            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            transition={
+              tripping
+                ? { duration: 1.2, repeat: Infinity, ease: "linear" }
+                : { type: "spring", stiffness: 400, damping: 22 }
+            }
             className="bg-zinc-900/80"
           />
         </div>
@@ -147,17 +182,19 @@ export function MouseGlow() {
 
       {/* Terminal-style cursor label */}
       <AnimatePresence>
-        {label && (
+        {shownLabel && (
           <motion.div
-            key={label}
+            key={shownLabel}
             initial={{ opacity: 0, scale: 0.7, y: 6 }}
             animate={{ opacity: 1, scale: 1, y: 0, x: pos.x + 50, top: pos.y + 22 }}
             exit={{ opacity: 0, scale: 0.7, y: 6 }}
             transition={{ type: "spring", stiffness: 350, damping: 25, mass: 0.3 }}
-            className="pointer-events-none fixed left-0 top-0 z-[101] hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0d1117]/95 border border-emerald-400/30 shadow-[0_4px_20px_rgba(0,0,0,0.5)] font-mono text-[11px] text-emerald-300 whitespace-nowrap"
+            className={`pointer-events-none fixed left-0 top-0 z-[101] hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0d1117]/95 border shadow-[0_4px_20px_rgba(0,0,0,0.5)] font-mono text-[11px] whitespace-nowrap ${
+              tripping ? "border-red-400/40 text-red-300" : "border-emerald-400/30 text-emerald-300"
+            }`}
           >
-            <span className="text-emerald-500/70">$</span>
-            {label}
+            <span className={tripping ? "text-red-500/70" : "text-emerald-500/70"}>$</span>
+            {shownLabel}
           </motion.div>
         )}
       </AnimatePresence>
