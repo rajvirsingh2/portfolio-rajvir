@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { projects } from "@/lib/data";
 import { ArrowRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
+import { TiltCard } from "@/components/ui/TiltCard";
 
 export default function ProjectsPage() {
   const router = useRouter();
@@ -38,10 +39,12 @@ export default function ProjectsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ delay: i * 0.1, duration: 0.5 }}
+            className="h-full"
           >
+            <TiltCard className="group">
             <div
               onClick={() => router.push(`/projects/${project.slug}`)}
-              className="group relative rounded-2xl card-surface p-8 hover:-translate-y-1 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5)] transition-all duration-300 cursor-pointer h-full flex flex-col overflow-hidden"
+              className="relative rounded-2xl card-surface p-8 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5)] transition-all duration-300 cursor-pointer h-full flex flex-col overflow-hidden"
               data-hover
             >
               {/* Accent hairline on top, revealed on hover */}
@@ -100,6 +103,7 @@ export default function ProjectsPage() {
                 </div>
               </div>
             </div>
+            </TiltCard>
           </motion.div>
         ))}
       </div>
