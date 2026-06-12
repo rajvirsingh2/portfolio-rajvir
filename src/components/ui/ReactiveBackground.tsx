@@ -124,7 +124,7 @@ export function MouseGlow() {
 
       // Shake detection: sustained high speed sends the blob on a trip
       speedEma = speedEma * 0.75 + Math.hypot(dx, dy) * 0.25;
-      if (speedEma > 55 && !tripActive) {
+      if (speedEma > 70 && !tripActive) {
         tripActive = true;
         setTripping(true);
         setTimeout(() => {
