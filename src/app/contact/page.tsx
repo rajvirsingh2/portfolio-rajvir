@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Mail, MapPin, Link2, Code2, ArrowUpRight } from "lucide-react";
+import { SiInstagram, SiLeetcode } from "react-icons/si";
 
 export default function ContactPage() {
   return (
@@ -23,6 +24,7 @@ export default function ContactPage() {
         className="text-lg text-white/50 max-w-2xl mb-16"
       >
         Open to internships, collaborations, and interesting conversations about distributed systems, mobile dev, or ML.
+        Spam gets piped to <span className="font-mono text-sm text-white/40">/dev/null</span>.
       </motion.p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -31,6 +33,7 @@ export default function ContactPage() {
           label="Email"
           value="rajvirsingh1009f@gmail.com"
           href="mailto:rajvirsingh1009f@gmail.com"
+          cursorLabel="ping rajvir"
           delay={0.2}
         />
         <ContactCard
@@ -39,6 +42,7 @@ export default function ContactPage() {
           value="Rajvir Singh"
           href="https://www.linkedin.com/in/rajvir-singh-007303257/"
           external
+          cursorLabel="connect()"
           delay={0.25}
         />
         <ContactCard
@@ -47,13 +51,32 @@ export default function ContactPage() {
           value="rajvirsingh2"
           href="https://github.com/rajvirsingh2"
           external
+          cursorLabel="git clone rajvir"
           delay={0.3}
+        />
+        <ContactCard
+          icon={<SiLeetcode className="w-5 h-5" />}
+          label="LeetCode"
+          value="vir_s_ingh"
+          href="https://leetcode.com/u/vir_s_ingh"
+          external
+          cursorLabel="while(grind)"
+          delay={0.35}
+        />
+        <ContactCard
+          icon={<SiInstagram className="w-5 h-5" />}
+          label="Instagram"
+          value="@rajvir_s_ingh"
+          href="https://www.instagram.com/rajvir_s_ingh/"
+          external
+          cursorLabel="follow++"
+          delay={0.4}
         />
         <ContactCard
           icon={<MapPin className="w-5 h-5" />}
           label="Location"
           value="Chandigarh, India"
-          delay={0.35}
+          delay={0.45}
         />
       </div>
 
@@ -67,19 +90,19 @@ export default function ContactPage() {
           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
         </span>
         <p className="text-sm text-white/55">
-          <span className="text-emerald-300/90 font-medium">Currently available</span> for internships and freelance work — fastest response over email.
+          <span className="text-emerald-300/90 font-medium">Currently available</span> for internships and freelance work — response time faster than my API. Usually.
         </p>
       </motion.div>
     </div>
   );
 }
 
-function ContactCard({ icon, label, value, href, external, delay = 0 }: {
-  icon: React.ReactNode; label: string; value: string; href?: string; external?: boolean; delay?: number;
+function ContactCard({ icon, label, value, href, external, cursorLabel, delay = 0 }: {
+  icon: React.ReactNode; label: string; value: string; href?: string; external?: boolean; cursorLabel?: string; delay?: number;
 }) {
   const Wrapper = href ? "a" : "div";
   const props = href
-    ? { href, ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}) }
+    ? { href, ...(external ? { target: "_blank", rel: "noopener noreferrer" } : {}), ...(cursorLabel ? { "data-cursor": cursorLabel } : {}) }
     : {};
 
   return (

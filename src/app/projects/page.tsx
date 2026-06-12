@@ -46,6 +46,7 @@ export default function ProjectsPage() {
               onClick={() => router.push(`/projects/${project.slug}`)}
               className="relative rounded-2xl card-surface p-8 hover:shadow-[0_24px_48px_rgba(0,0,0,0.5)] transition-all duration-300 cursor-pointer h-full flex flex-col overflow-hidden"
               data-hover
+              data-cursor={`./open ${project.slug}`}
             >
               {/* Accent hairline on top, revealed on hover */}
               <div
@@ -96,6 +97,7 @@ export default function ProjectsPage() {
                       onClick={(e) => e.stopPropagation()}
                       className="p-2 -m-2 hover:text-white transition-colors duration-200"
                       aria-label="View Source on GitHub"
+                      data-cursor="git clone"
                     >
                       <FaGithub className="w-5 h-5" />
                     </a>

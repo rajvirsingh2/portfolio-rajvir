@@ -154,6 +154,7 @@ export function RobotBuddy() {
       className="fixed bottom-24 right-10 z-[60] cursor-pointer select-none"
       onClick={handleClick}
       data-hover
+      data-cursor="sudo boop"
     >
       {/* Speech bubble */}
       <AnimatePresence>

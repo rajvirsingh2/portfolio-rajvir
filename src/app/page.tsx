@@ -67,14 +67,14 @@ export default function HomePage() {
             variants={nameContainer}
             initial="hidden"
             animate="visible"
-            className="font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[0.95] mb-7"
+            className="font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
             aria-label="Rajvir Singh"
           >
             {"Rajvir Singh".split("").map((ch, i) => (
               <motion.span
                 key={i}
                 variants={letter}
-                className="inline-block text-shine"
+                className="inline-block text-shine pb-[0.15em] -mb-[0.15em]"
                 style={{
                   whiteSpace: ch === " " ? "pre" : undefined,
                   animationDelay: `${-i * 0.18}s`,
@@ -123,6 +123,7 @@ export default function HomePage() {
                 <Link
                   href="/projects"
                   data-hover
+                  data-cursor="cd ./projects"
                   className="relative inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#09090b] text-white text-sm font-bold transition-colors duration-200"
                 >
                   View Projects <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
@@ -134,6 +135,7 @@ export default function HomePage() {
               <Link
                 href="/about"
                 data-hover
+                data-cursor="whoami"
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/70 text-sm font-medium hover:bg-white/[0.08] hover:border-white/[0.14] hover:text-white transition-all duration-200 font-mono"
               >
                 About Me <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />

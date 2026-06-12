@@ -17,6 +17,8 @@ export interface Experience {
   company: string;
   period: string;
   bullets: string[];
+  tech: string[];
+  accent: string;
 }
 
 export const projects: Project[] = [
@@ -123,6 +125,8 @@ export const experiences: Experience[] = [
       "Collaborated with product designers to translate complex requirements into polished UI with consistent visual guidelines.",
       "Implemented real-time data sync with Coroutines + Retrofit, maintaining code quality with TDD (JUnit/Mockito).",
     ],
+    tech: ["Kotlin", "Jetpack Compose", "MVVM", "Coroutines", "Retrofit", "JUnit"],
+    accent: "59, 130, 246",
   },
   {
     role: "Research Intern",
@@ -133,6 +137,8 @@ export const experiences: Experience[] = [
       "Engineered a novel unsupervised pipeline with UMAP and HDBSCAN for automatic task generation.",
       "Benchmarked six CL strategies — A-GEM achieved 98.9% accuracy in in-domain scenarios.",
     ],
+    tech: ["Python", "PyTorch", "UMAP", "HDBSCAN", "A-GEM"],
+    accent: "16, 185, 129",
   },
   {
     role: "Team Lead Intern (Android)",
@@ -143,6 +149,8 @@ export const experiences: Experience[] = [
       "Defined visual guidelines and design system; prototyped interactions based on user feedback.",
       "Architected the app with Kotlin, Android SDK, and Dagger for DI with real-time admin panel.",
     ],
+    tech: ["Kotlin", "Android SDK", "Dagger", "Firebase", "Figma"],
+    accent: "139, 92, 246",
   },
 ];
 

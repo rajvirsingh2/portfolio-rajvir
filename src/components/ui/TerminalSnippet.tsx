@@ -14,11 +14,49 @@ const defaultLines: TerminalLine[] = [
   { text: "Timeline  : 2022 — 2027", type: "output" },
   { text: "Roles     : [Software Engineer, Android Engineer, ML Researcher]", type: "output" },
   { text: "Skills    : [Go, Kotlin, Python, Next.js, PyTorch]", type: "output" },
+  { text: "Coffee    : [████████░░] 80% — refill scheduled", type: "output" },
   { text: "Status    : Ready to build scalable systems.", type: "success" },
-  { text: "> Type a page name (e.g. 'projects', 'about', 'experience') and hit Enter to navigate.", type: "system" },
+  { text: "> Type 'help' for commands, or a page name ('projects', 'about'...) to navigate.", type: "system" },
 ];
 
-const VALID_PAGES = ["about", "projects", "experience", "contact"];
+const VALID_PAGES = ["about", "projects", "experience", "contact", "home"];
+
+function easterEgg(cmd: string): TerminalLine[] | null {
+  if (cmd === "help") {
+    return [
+      { text: "Available: about | projects | experience | contact | home", type: "output" },
+      { text: "Also try: whoami, ls, sudo, coffee, rm -rf /", type: "system" },
+    ];
+  }
+  if (cmd === "ls") {
+    return [{ text: "about/  projects/  experience/  contact/  secrets/ [ACCESS DENIED]", type: "output" }];
+  }
+  if (cmd === "whoami") {
+    return [{ text: "guest — but Rajvir would love an upgrade. Try 'contact'.", type: "output" }];
+  }
+  if (cmd.startsWith("sudo")) {
+    return [{ text: "Permission denied: this incident will be reported to Rajvir.", type: "error" }];
+  }
+  if (cmd.includes("rm -rf")) {
+    return [
+      { text: "Blocked by self-preservation protocol.", type: "error" },
+      { text: "> Portfolio chooses to live.", type: "system" },
+    ];
+  }
+  if (cmd === "coffee" || cmd === "brew") {
+    return [{ text: "Error 418: I'm a teapot. Coffee module ships in v2.", type: "error" }];
+  }
+  if (cmd === "hi" || cmd === "hello" || cmd === "hey") {
+    return [{ text: "Hello human. Beep boop. Try 'contact' to reach my creator.", type: "success" }];
+  }
+  if (cmd === "vim" || cmd === "vi") {
+    return [{ text: "Entering vim... good luck exiting. (:q! works here, promise)", type: "output" }];
+  }
+  if (cmd === ":q!" || cmd === ":wq") {
+    return [{ text: "You escaped vim. Achievement unlocked.", type: "success" }];
+  }
+  return null;
+}
 
 export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine[] }) {
   const [visibleLines, setVisibleLines] = useState<number>(0);
@@ -54,17 +92,23 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
       const newHistory: TerminalLine[] = [...history, { text: `$ ${inputValue}`, type: "cmd" }];
       
       if (VALID_PAGES.includes(cmd)) {
-        newHistory.push({ text: `> Navigating to /${cmd}...`, type: "system" });
+        const path = cmd === "home" ? "/" : `/${cmd}`;
+        newHistory.push({ text: `> Navigating to ${path}...`, type: "system" });
         setHistory(newHistory);
         setInputValue("");
         setTimeout(() => {
-          router.push(`/${cmd}`);
+          router.push(path);
         }, 500);
       } else {
-        newHistory.push({ 
-          text: `Error: Command '${cmd}' not found. Type something real buddy! See the hints above...`, 
-          type: "error" 
-        });
+        const egg = easterEgg(cmd);
+        if (egg) {
+          newHistory.push(...egg);
+        } else {
+          newHistory.push({
+            text: `Error: Command '${cmd}' not found. Type something real buddy! Try 'help'.`,
+            type: "error",
+          });
+        }
         setHistory(newHistory);
         setInputValue("");
       }

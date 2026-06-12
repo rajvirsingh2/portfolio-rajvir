@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * ReactiveBackground - A mouse-reactive gradient spotlight that follows
@@ -59,12 +59,14 @@ export function ReactiveBackground() {
 }
 
 /**
- * MouseGlow - A reactive glow that follows the cursor and expands
- * on interactive elements. Uses mix-blend-difference for contrast.
+ * MouseGlow - A reactive glow that follows the cursor and expands on
+ * interactive elements. Elements can set a `data-cursor` attribute to
+ * show a playful terminal-style label pill next to the cursor.
  */
 export function MouseGlow() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
+  const [label, setLabel] = useState<string | null>(null);
 
   useEffect(() => {
     const move = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY });
@@ -73,6 +75,8 @@ export function MouseGlow() {
       setIsHovering(
         !!(el.closest("a") || el.closest("button") || el.closest("[data-hover]"))
       );
+      const labelled = el.closest("[data-cursor]") as HTMLElement | null;
+      setLabel(labelled?.dataset.cursor ?? null);
     };
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseover", over);
@@ -83,23 +87,42 @@ export function MouseGlow() {
   }, []);
 
   return (
-    <motion.div
-      className="pointer-events-none fixed top-0 left-0 z-[100] mix-blend-difference hidden lg:block"
-      animate={{
-        x: pos.x - (isHovering ? 32 : 10),
-        y: pos.y - (isHovering ? 32 : 10),
-      }}
-      transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.1 }}
-    >
+    <>
       <motion.div
+        className="pointer-events-none fixed top-0 left-0 z-[100] mix-blend-difference hidden lg:block"
         animate={{
-          width: isHovering ? 64 : 20,
-          height: isHovering ? 64 : 20,
-          opacity: isHovering ? 0.3 : 0.8,
+          x: pos.x - (isHovering ? 32 : 10),
+          y: pos.y - (isHovering ? 32 : 10),
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="rounded-full bg-white"
-      />
-    </motion.div>
+        transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.1 }}
+      >
+        <motion.div
+          animate={{
+            width: isHovering ? 64 : 20,
+            height: isHovering ? 64 : 20,
+            opacity: isHovering ? 0.3 : 0.8,
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="rounded-full bg-white"
+        />
+      </motion.div>
+
+      {/* Terminal-style cursor label */}
+      <AnimatePresence>
+        {label && (
+          <motion.div
+            key={label}
+            initial={{ opacity: 0, scale: 0.7, y: 6 }}
+            animate={{ opacity: 1, scale: 1, y: 0, x: pos.x + 22, top: pos.y + 18 }}
+            exit={{ opacity: 0, scale: 0.7, y: 6 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25, mass: 0.3 }}
+            className="pointer-events-none fixed left-0 top-0 z-[101] hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#0d1117]/95 border border-emerald-400/30 shadow-[0_4px_20px_rgba(0,0,0,0.5)] font-mono text-[11px] text-emerald-300 whitespace-nowrap"
+          >
+            <span className="text-emerald-500/70">$</span>
+            {label}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
