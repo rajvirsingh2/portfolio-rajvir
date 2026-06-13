@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { RobotBuddy } from "@/components/ui/RobotBuddy";
+import { ConsoleEasterEgg } from "@/components/ui/ConsoleEasterEgg";
 import { ReactiveBackground, MouseGlow } from "@/components/ui/ReactiveBackground";
 
 const inter = Inter({
@@ -42,6 +43,7 @@ export default function RootLayout({
         <MouseGlow />
         <main className="pt-20">{children}</main>
         <RobotBuddy />
+        <ConsoleEasterEgg />
       </body>
     </html>
   );

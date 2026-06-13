@@ -67,14 +67,15 @@ export default function HomePage() {
             variants={nameContainer}
             initial="hidden"
             animate="visible"
-            className="group cursor-default font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
+            className="font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
             aria-label="Rajvir Singh"
           >
             {"Rajvir Singh".split("").map((ch, i) => (
               <motion.span
                 key={i}
                 variants={letter}
-                className="inline-block text-shine pb-[0.15em] -mb-[0.15em]"
+                whileHover={{ y: -10, rotate: i % 2 ? 4 : -4, scale: 1.08 }}
+                className="inline-block text-shine name-letter pb-[0.15em] -mb-[0.15em] cursor-default"
                 style={{
                   whiteSpace: ch === " " ? "pre" : undefined,
                   animationDelay: `${-i * 0.18}s`,

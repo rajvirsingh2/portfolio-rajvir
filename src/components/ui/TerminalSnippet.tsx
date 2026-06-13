@@ -66,9 +66,6 @@ function easterEgg(cmd: string): TerminalLine[] | null {
   if (cmd === "hi" || cmd === "hello" || cmd === "hey") {
     return [{ text: "Hello human. Beep boop. Try 'contact' to reach my creator.", type: "success" }];
   }
-  if (cmd === "anupam") {
-    return [{ text: "he is purav ka chaatne wala", type: "output" }];
-  }
   if (cmd === "vim" || cmd === "vi") {
     return [{ text: "Entering vim... good luck exiting. (:q! works here, promise)", type: "output" }];
   }
