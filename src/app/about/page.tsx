@@ -1,17 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CountUp } from "@/components/ui/SpotlightCard";
 import Link from "next/link";
-import { skills } from "@/lib/data";
-import { 
-  GraduationCap, 
-  Terminal, 
-  Cpu, 
-  Layers, 
-  ShieldCheck, 
-  ArrowRight,
-  Sparkles
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import {
   SiKotlin, SiAndroid, SiGo, SiPostgresql, SiRedis, SiDocker,
   SiKubernetes, SiPython, SiPytorch,
@@ -21,45 +13,26 @@ import { FaJava, FaAws } from "react-icons/fa";
 import { TbApi } from "react-icons/tb";
 import { Magnetic } from "@/components/ui/Magnetic";
 
-const categoryLabels: Record<string, string> = {
-  mobile: "Mobile",
-  backend: "Backend",
-  devops: "DevOps & Cloud",
-  ml: "Machine Learning",
-  tools: "Tools",
-};
+// Degree progress: Nov 2022 -> May 2027
+const DEGREE_START = new Date(2022, 10);
+const DEGREE_END = new Date(2027, 4);
+const degreePct = Math.min(
+  99,
+  Math.round(((Date.now() - DEGREE_START.getTime()) / (DEGREE_END.getTime() - DEGREE_START.getTime())) * 100)
+);
 
-const categoryOrder = ["mobile", "backend", "devops", "ml", "tools"];
-
-const stats = [
-  { value: "3+", label: "Projects Shipped", color: "text-blue-400" },
-  { value: "3", label: "Internships", color: "text-emerald-400" },
-  { value: "98.9%", label: "ML Accuracy", color: "text-purple-400" },
-  { value: "4-Member", label: "Team Led", color: "text-yellow-400" },
+// Orbit rings: radius, duration, direction, members
+const rings: { radius: number; duration: number; reverse?: boolean; items: string[] }[] = [
+  { radius: 80, duration: 24, items: ["Kotlin", "Jetpack Compose", "Android SDK", "Firebase"] },
+  { radius: 140, duration: 36, reverse: true, items: ["Go", "PostgreSQL", "Redis", "Java", "C++", "REST APIs"] },
+  { radius: 200, duration: 48, items: ["Python", "PyTorch", "Docker", "Kubernetes", "AWS", "Git"] },
 ];
 
-const philosophies = [
-  {
-    title: "Systems Thinker",
-    icon: <Layers className="w-5 h-5 text-blue-400" />,
-    description: "I build distributed systems that scale. Designing Go microservices, implementing Redis caching layers, and structuring PostgreSQL databases for optimal throughput.",
-    color: "from-blue-500/10 to-transparent",
-    borderColor: "group-hover:border-blue-500/30",
-  },
-  {
-    title: "Mobile Craftsman",
-    icon: <Cpu className="w-5 h-5 text-emerald-400" />,
-    description: "Creating offline-first, pixel-perfect Android apps. Combining Jetpack Compose with clean architectures (MVI/MVVM) to ensure robust, fluid user experiences.",
-    color: "from-emerald-500/10 to-transparent",
-    borderColor: "group-hover:border-emerald-500/30",
-  },
-  {
-    title: "Research-Driven",
-    icon: <ShieldCheck className="w-5 h-5 text-purple-400" />,
-    description: "Combating deepfake threats using Continual Learning. Developing tasks using unsupervised pipelines to mitigate catastrophic forgetting in neural networks.",
-    color: "from-purple-500/10 to-transparent",
-    borderColor: "group-hover:border-purple-500/30",
-  },
+const stats: { value: number; decimals?: number; prefix?: string; suffix?: string; label: string }[] = [
+  { value: 98.9, decimals: 1, suffix: "%", label: "deepfake detection accuracy — A-GEM continual learning thesis" },
+  { value: 3.7, decimals: 1, prefix: "top ", suffix: "%", label: "Amazon ML Summer School '25 — 3,000 of 80,000+ applicants" },
+  { value: 26, label: "public repos — Kotlin-heavy, OSS contributions to Wikipedia Android & Mifos" },
+  { value: 4, label: "engineers led from wireframes to a shipped fest app" },
 ];
 
 export default function AboutPage() {
@@ -79,167 +52,161 @@ export default function AboutPage() {
       >
         ~/about
       </motion.span>
+
+      {/* Editorial statement */}
       <motion.h1
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }}
-        className="font-display text-5xl md:text-6xl font-bold tracking-tighter text-gradient mb-12"
+        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+        className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[1.08] mb-10 max-w-4xl"
       >
-        About Me
+        <span className="text-white">I build </span>
+        <span className="text-gradient-accent">distributed backends</span>
+        <span className="text-white/40">, lead </span>
+        <span className="text-white">mobile teams</span>
+        <span className="text-white/40">, and teach models </span>
+        <span className="text-gradient-accent">not to forget</span>
+        <span className="text-white">.</span>
       </motion.h1>
 
-      {/* Terminal-Style Bio Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="rounded-xl overflow-hidden bg-[#0d1117]/80 backdrop-blur-md border border-white/10 shadow-2xl shadow-emerald-500/[0.02] mb-16"
+      <motion.p
+        initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+        className="text-lg text-white/50 leading-relaxed max-w-2xl mb-6"
       >
-        <div className="flex items-center justify-between px-4 py-3 bg-[#161b22] border-b border-white/5">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500/80" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-            <div className="w-3 h-3 rounded-full bg-green-500/80" />
-          </div>
-          <div className="text-xs font-mono text-white/40">rajvir@portfolio:~/about</div>
-          <div className="w-12" />
+        Integrated B.Tech+M.Tech in Information Technology at IIIT Gwalior — researching
+        continual learning against evolving deepfakes when not shipping Go services or Android apps.
+      </motion.p>
+
+      {/* Education progress — borderless strip */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+        className="flex items-center gap-4 max-w-2xl mb-20"
+      >
+        <span className="text-sm text-white/40 whitespace-nowrap">IIIT Gwalior</span>
+        <div className="flex-1 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${degreePct}%` }}
+            transition={{ delay: 0.6, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-blue-500"
+          />
         </div>
-        <div className="p-6 sm:p-8 font-mono text-sm leading-relaxed text-white/80">
-          <div className="flex items-center text-blue-400 mb-4">
-            <span className="mr-2">$</span>
-            <span>cat ~/README.md</span>
-          </div>
-          <p className="text-white/95 mb-4 font-sans text-base">
-            Hey, I'm <span className="text-emerald-400 font-semibold">Rajvir Singh</span>. I'm currently pursuing an Integrated B.Tech + M.Tech in Information Technology at the Indian Institute of Information Technology, Gwalior (graduating May 2027).
-          </p>
-          <p className="text-white/70 mb-4 font-sans text-base leading-relaxed">
-            I specialize in engineering high-throughput backend services, designing modular offline-first mobile systems, and investigating machine learning architectures. I bridge the gap between rigorous systems design and cutting-edge research.
-          </p>
-          <p className="text-white/70 font-sans text-base leading-relaxed">
-            Outside of IDEs, I enjoy leading collaborative teams, prototyping interfaces based on feedback loop systems, and pushing the boundaries of what is possible with software.
-          </p>
-        </div>
+        <span className="text-sm font-semibold text-emerald-300/90 whitespace-nowrap">{degreePct}% of degree compiled</span>
       </motion.div>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
-        {stats.map((stat, idx) => (
+      {/* Stats — oversized editorial numbers, staggered baselines, no boxes */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-14 mb-24">
+        {stats.map((s, i) => (
           <motion.div
-            key={idx}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + idx * 0.05 }}
-            className="group relative rounded-xl card-surface p-6 overflow-hidden flex flex-col justify-center items-center text-center cursor-default hover:border-emerald-500/20 transition-all duration-300"
+            key={s.label}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ delay: i * 0.08, duration: 0.5 }}
+            className={`group ${i % 2 === 1 ? "sm:translate-y-8" : ""}`}
           >
-            <div className={`text-3xl sm:text-4xl font-bold font-display tracking-tight mb-2 ${stat.color}`}>
-              {stat.value}
+            <div className="font-display text-6xl sm:text-7xl font-bold tracking-tighter text-gradient group-hover:text-glow-accent transition-all duration-300 mb-3">
+              {s.prefix}
+              <CountUp value={s.value} decimals={s.decimals ?? 0} suffix={s.suffix ?? ""} />
             </div>
-            <div className="text-xs font-mono tracking-wider text-white/45 uppercase">
-              {stat.label}
-            </div>
+            <div className="h-px w-16 bg-gradient-to-r from-emerald-400/60 to-transparent mb-3 group-hover:w-28 transition-all duration-500" aria-hidden />
+            <p className="text-sm text-white/45 leading-relaxed max-w-xs">{s.label}</p>
           </motion.div>
         ))}
       </div>
 
-      {/* Philosophy Section */}
-      <div className="mb-16">
-        <div className="flex items-center gap-3 mb-8">
-          <h2 className="font-display text-2xl font-bold text-white tracking-tight">Core Approach</h2>
-          <div className="flex-1 h-px hairline opacity-50" aria-hidden />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {philosophies.map((phil, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + idx * 0.1 }}
-              className={`group relative rounded-xl card-surface p-6 flex flex-col gap-4 border border-white/5 bg-gradient-to-b ${phil.color} transition-all duration-300 ${phil.borderColor} hover:shadow-[0_0_24px_rgba(52,211,153,0.03)] cursor-default`}
-            >
-              <div className="w-10 h-10 rounded-xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center group-hover:scale-110 group-hover:bg-emerald-500/5 group-hover:border-emerald-500/25 transition-all duration-300">
-                {phil.icon}
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-semibold text-white mb-2 group-hover:text-emerald-400 transition-colors duration-200">
-                  {phil.title}
-                </h3>
-                <p className="text-sm text-white/50 leading-relaxed group-hover:text-white/60 transition-colors duration-200">
-                  {phil.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Education */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ delay: 0.4 }}
-        className="relative rounded-xl card-surface p-8 mb-16 overflow-hidden hover:border-blue-500/25 transition-all duration-300 group cursor-default"
+      {/* Tech stack — orbital system */}
+      <motion.h2
+        initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+        className="font-display text-2xl font-bold text-white mb-2 tracking-tight"
       >
-        <div className="absolute top-0 left-0 right-0 h-px hairline" aria-hidden />
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-400/20 flex items-center justify-center group-hover:bg-blue-500/20 group-hover:border-blue-400/40 transition-colors duration-300">
-            <GraduationCap className="w-5 h-5 text-blue-400 animate-pulse" />
-          </div>
-          <h2 className="font-display text-xl font-semibold text-white">Education</h2>
-        </div>
-        <h3 className="text-lg text-white/90 font-medium group-hover:text-blue-400 transition-colors duration-300">
-          Indian Institute of Information Technology Gwalior
-        </h3>
-        <p className="text-white/55 mt-1">Integrated B.Tech + M.Tech in Information Technology</p>
-        <p className="text-white/30 text-sm mt-3 font-mono tracking-wide">November 2022 — May 2027</p>
-      </motion.div>
-
-      {/* Skills grouped by category */}
-      <motion.div
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
-        transition={{ delay: 0.45 }}
-        className="mb-20"
+        Tech Stack
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+        className="text-sm text-white/40 mb-10"
       >
-        <h2 className="font-display text-2xl font-bold text-white mb-8 tracking-tight">Tech Stack</h2>
-        <div className="space-y-10">
-          {categoryOrder.map((cat, ci) => {
-            const items = skills.filter((s) => s.category === cat);
-            if (items.length === 0) return null;
-            return (
-              <div key={cat}>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-white/35">{categoryLabels[cat]}</span>
-                  <div className="flex-1 h-px hairline opacity-50" aria-hidden />
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  {items.map((skill, i) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + ci * 0.05 + i * 0.02 }}
-                      className="group flex items-center gap-3 px-4 py-3.5 rounded-xl card-surface transition-all duration-300 cursor-default hover:border-emerald-500/20"
-                    >
-                      <motion.div
-                        className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center transition-colors duration-300 group-hover:bg-emerald-500/5 group-hover:border-emerald-500/20"
-                        whileHover={{ scale: 1.12, rotate: 4 }}
+        Everything in orbit around the work. Hover a moon.
+      </motion.p>
+
+      {/* Orbit (md+) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative hidden md:flex items-center justify-center h-[460px] select-none"
+        aria-label="Tech stack orbit"
+      >
+        {/* Center core */}
+        <div className="absolute w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400/20 to-blue-500/20 border border-emerald-400/30 flex items-center justify-center shadow-[0_0_60px_rgba(52,211,153,0.25)]">
+          <span className="font-display font-bold text-xl text-white">RS<span className="text-emerald-400">.</span></span>
+        </div>
+
+        {rings.map((ring, ri) => (
+          <div key={ri}>
+            {/* Ring line */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.06]"
+              style={{ width: ring.radius * 2, height: ring.radius * 2 }}
+              aria-hidden
+            />
+            {/* Moons */}
+            {ring.items.map((name, ii) => {
+              const angle = (360 / ring.items.length) * ii;
+              return (
+                <div
+                  key={name}
+                  className="absolute top-1/2 left-1/2 w-0 h-0"
+                  style={{ transform: `rotate(${angle}deg)` }}
+                >
+                  <div
+                    className="animate-orbit"
+                    style={{ animationDuration: `${ring.duration}s`, animationDirection: ring.reverse ? "reverse" : "normal" }}
+                  >
+                    <div style={{ transform: `translateY(-${ring.radius}px)` }}>
+                      <div
+                        className="animate-orbit"
+                        style={{ animationDuration: `${ring.duration}s`, animationDirection: ring.reverse ? "normal" : "reverse" }}
                       >
-                        <SkillIcon name={skill.name} />
-                      </motion.div>
-                      <span className="text-sm font-medium text-white/60 group-hover:text-white/90 transition-colors duration-200">{skill.name}</span>
-                    </motion.div>
-                  ))}
+                        <div style={{ transform: `rotate(${-angle}deg)` }} className="-translate-x-1/2 -translate-y-1/2">
+                          <div
+                            className="group w-11 h-11 rounded-full bg-[#101013] border border-white/10 flex items-center justify-center hover:border-emerald-400/50 hover:shadow-[0_0_20px_rgba(52,211,153,0.3)] hover:scale-125 transition-all duration-200 cursor-default"
+                            data-hover
+                            data-cursor={name.toLowerCase()}
+                            title={name}
+                          >
+                            <SkillIcon name={name} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ))}
       </motion.div>
+
+      {/* Mobile fallback — borderless chip flow */}
+      <div className="md:hidden space-y-6 mb-20">
+        {rings.map((ring, ri) => (
+          <div key={ri} className="flex flex-wrap gap-2">
+            {ring.items.map((name) => (
+              <span
+                key={name}
+                className="inline-flex items-center gap-2 pl-2.5 pr-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-sm text-white/60"
+              >
+                <SkillIcon name={name} />
+                {name}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
 
       {/* CTA Footer */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
         className="flex flex-col items-center justify-center text-center py-10 border-t border-white/5"
       >
         <h3 className="font-display text-2xl font-bold text-white mb-4">Have an interesting project in mind?</h3>
