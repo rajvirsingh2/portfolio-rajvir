@@ -116,6 +116,8 @@ export function MouseGlow() {
       const dx = e.clientX - last.x;
       const dy = e.clientY - last.y;
       last = { x: e.clientX, y: e.clientY };
+      
+      // Update motion values directly (avoids expensive React state re-renders)
       mx.set(e.clientX + 14);
       my.set(e.clientY + 14);
       tilt.set(clamp(dx * 0.9, 16));
@@ -134,6 +136,7 @@ export function MouseGlow() {
         }, 3000);
       }
     };
+
     const over = (e: MouseEvent) => {
       const el = e.target as HTMLElement;
       setIsHovering(
@@ -182,6 +185,9 @@ export function MouseGlow() {
                 : { type: "spring", stiffness: 400, damping: 22, mass: 0.2 }
             }
           >
+            {/* Blob body */}
+            ...
+
             {/* Blob body */}
             <div className={`relative w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 shadow-[0_2px_12px_rgba(52,211,153,0.45)] flex flex-col items-center justify-center ${tripping ? "animate-trip" : ""}`}>
               {/* Eyes */}

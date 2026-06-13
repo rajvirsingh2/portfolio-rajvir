@@ -67,7 +67,7 @@ export default function HomePage() {
             variants={nameContainer}
             initial="hidden"
             animate="visible"
-            className="font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
+            className="group cursor-default font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
             aria-label="Rajvir Singh"
           >
             {"Rajvir Singh".split("").map((ch, i) => (

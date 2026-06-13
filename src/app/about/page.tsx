@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { CountUp } from "@/components/ui/SpotlightCard";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import {
   SiKotlin, SiAndroid, SiGo, SiPostgresql, SiRedis, SiDocker,
   SiKubernetes, SiPython, SiPytorch,
@@ -9,6 +11,7 @@ import {
 } from "react-icons/si";
 import { FaJava, FaAws } from "react-icons/fa";
 import { TbApi } from "react-icons/tb";
+import { Magnetic } from "@/components/ui/Magnetic";
 
 // Degree progress: Nov 2022 -> May 2027
 const DEGREE_START = new Date(2022, 10);
@@ -35,8 +38,16 @@ const stats: { value: number; decimals?: number; prefix?: string; suffix?: strin
 export default function AboutPage() {
   return (
     <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 pb-32">
+      {/* Decorative Blur Backgrounds */}
+      <div
+        className="absolute top-10 left-1/4 w-[500px] h-[300px] rounded-full blur-[130px] pointer-events-none opacity-10"
+        style={{ background: "radial-gradient(closest-side, rgba(52,211,153,0.35), transparent)" }}
+        aria-hidden
+      />
+
       <motion.span
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }}
         className="block font-mono text-xs tracking-[0.3em] uppercase text-emerald-400/70 mb-4"
       >
         ~/about
@@ -175,7 +186,7 @@ export default function AboutPage() {
       </motion.div>
 
       {/* Mobile fallback — borderless chip flow */}
-      <div className="md:hidden space-y-6">
+      <div className="md:hidden space-y-6 mb-20">
         {rings.map((ring, ri) => (
           <div key={ri} className="flex flex-wrap gap-2">
             {ring.items.map((name) => (
@@ -190,6 +201,33 @@ export default function AboutPage() {
           </div>
         ))}
       </div>
+
+      {/* CTA Footer */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="flex flex-col items-center justify-center text-center py-10 border-t border-white/5"
+      >
+        <h3 className="font-display text-2xl font-bold text-white mb-4">Have an interesting project in mind?</h3>
+        <p className="text-white/50 text-sm max-w-md mb-8">
+          Let's discuss how we can build robust backend pipelines, feature-rich mobile applications, or custom machine learning tools together.
+        </p>
+        <Magnetic>
+          <span className="relative inline-flex group">
+            <span
+              className="absolute -inset-px rounded-xl bg-gradient-to-r from-emerald-400 to-blue-500 opacity-80 group-hover:opacity-100 transition-opacity duration-200 group-hover:shadow-[0_0_32px_rgba(52,211,153,0.4)]"
+              aria-hidden
+            />
+            <Link
+              href="/contact"
+              className="relative inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#09090b] text-white text-sm font-bold transition-colors duration-200"
+            >
+              Get In Touch <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+            </Link>
+          </span>
+        </Magnetic>
+      </motion.div>
     </div>
   );
 }
