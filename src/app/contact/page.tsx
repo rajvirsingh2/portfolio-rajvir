@@ -57,7 +57,9 @@ export default function ContactPage() {
       >
         <span className="text-xs font-semibold uppercase tracking-[0.25em] text-white/35 block mb-4">Primary channel</span>
         <a
-          href={`mailto:${EMAIL}`}
+          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
+          target="_blank"
+          rel="noopener noreferrer"
           data-hover
           data-cursor="ping rajvir"
           className="group inline-block cursor-pointer relative z-10"
