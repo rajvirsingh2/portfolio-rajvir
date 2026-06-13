@@ -60,9 +60,9 @@ export default function ContactPage() {
           href={`mailto:${EMAIL}`}
           data-hover
           data-cursor="ping rajvir"
-          className="group inline-block"
+          className="group inline-block cursor-pointer relative z-10"
         >
-          <span className="font-display font-bold tracking-tight text-2xl sm:text-4xl md:text-[2.6rem] text-white group-hover:text-gradient-accent transition-all duration-300 break-all leading-tight">
+          <span className="font-display font-bold tracking-tight text-2xl sm:text-4xl md:text-[2.6rem] text-white group-hover:text-emerald-400 transition-colors duration-300 break-all leading-tight">
             {EMAIL}
           </span>
           <span className="block h-[3px] mt-3 rounded-full underline-beam w-full origin-left scale-x-100 group-hover:h-[5px] transition-all duration-300" aria-hidden />

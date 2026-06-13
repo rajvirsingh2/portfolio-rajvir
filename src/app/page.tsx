@@ -67,7 +67,7 @@ export default function HomePage() {
             variants={nameContainer}
             initial="hidden"
             animate="visible"
-            className="group cursor-default font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
+            className="font-display text-5xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] font-bold tracking-tighter leading-[1.05] mb-7"
             aria-label="Rajvir Singh"
           >
             {"Rajvir Singh".split("").map((ch, i) => (
@@ -75,10 +75,9 @@ export default function HomePage() {
                 key={i}
                 variants={letter}
                 whileHover={{ y: -10, rotate: i % 2 ? 4 : -4, scale: 1.08 }}
-                className="inline-block text-shine name-letter pb-[0.15em] -mb-[0.15em] cursor-default"
+                className="inline-block name-letter pb-[0.15em] -mb-[0.15em] cursor-default"
                 style={{
                   whiteSpace: ch === " " ? "pre" : undefined,
-                  animationDelay: `${-i * 0.18}s`,
                 }}
                 aria-hidden
               >
