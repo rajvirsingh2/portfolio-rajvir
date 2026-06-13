@@ -75,10 +75,9 @@ export default function HomePage() {
                 key={i}
                 variants={letter}
                 whileHover={{ y: -10, rotate: i % 2 ? 4 : -4, scale: 1.08 }}
-                className="inline-block text-shine name-letter pb-[0.15em] -mb-[0.15em] cursor-default"
+                className="inline-block name-letter pb-[0.15em] -mb-[0.15em] cursor-default"
                 style={{
                   whiteSpace: ch === " " ? "pre" : undefined,
-                  animationDelay: `${-i * 0.18}s`,
                 }}
                 aria-hidden
               >
