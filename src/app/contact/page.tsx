@@ -44,10 +44,10 @@ export default function ContactPage() {
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="text-lg text-white/50 max-w-2xl mb-20"
+        className="text-lg text-foreground/50 max-w-2xl mb-20"
       >
         Open to internships, collaborations, and interesting conversations about distributed systems, mobile dev, or ML.
-        Spam gets piped to <span className="font-mono text-sm text-white/40">/dev/null</span>.
+        Spam gets piped to <span className="font-mono text-sm text-foreground/40">/dev/null</span>.
       </motion.p>
 
       {/* Email hero — giant type, animated gradient underline, no box */}
@@ -55,7 +55,7 @@ export default function ContactPage() {
         initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
         className="mb-24"
       >
-        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-white/35 block mb-4">Primary channel</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-foreground/35 block mb-4">Primary channel</span>
         <a
           href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
           target="_blank"
@@ -64,7 +64,7 @@ export default function ContactPage() {
           data-cursor="ping rajvir"
           className="group inline-block cursor-pointer relative z-10"
         >
-          <span className="font-display font-bold tracking-tight text-2xl sm:text-4xl md:text-[2.6rem] text-white group-hover:text-emerald-400 transition-colors duration-300 break-all leading-tight">
+          <span className="font-display font-bold tracking-tight text-2xl sm:text-4xl md:text-[2.6rem] text-foreground group-hover:text-emerald-400 transition-colors duration-300 break-all leading-tight">
             {EMAIL}
           </span>
           <span className="block h-[3px] mt-3 rounded-full underline-beam w-full origin-left scale-x-100 group-hover:h-[5px] transition-all duration-300" aria-hidden />
@@ -81,13 +81,13 @@ export default function ContactPage() {
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             {copied ? "Copied!" : "Copy email"}
           </button>
-          <span className="inline-flex items-center text-xs text-white/30">Replies within 24h — usually much faster.</span>
+          <span className="inline-flex items-center text-xs text-foreground/30">Replies within 24h — usually much faster.</span>
         </div>
       </motion.div>
 
       {/* Social index — editorial rows, brand color floods on hover */}
       <div className="mb-20">
-        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-white/35 block mb-2">Elsewhere</span>
+        <span className="text-xs font-semibold uppercase tracking-[0.25em] text-foreground/35 block mb-2">Elsewhere</span>
         <div>
           {socials.map((s, i) => (
             <motion.a
@@ -103,25 +103,25 @@ export default function ContactPage() {
               transition={{ delay: i * 0.08, duration: 0.5 }}
               onMouseEnter={(e) => e.currentTarget.style.setProperty("--row-c", s.color)}
               onMouseLeave={(e) => e.currentTarget.style.removeProperty("--row-c")}
-              className="group flex items-center gap-5 sm:gap-8 py-6 border-b border-white/[0.07] first:border-t hover:border-white/[0.15] transition-colors duration-300 cursor-pointer"
+              className="group flex items-center gap-5 sm:gap-8 py-6 border-b border-foreground/[0.07] first:border-t hover:border-foreground/[0.15] transition-colors duration-300 cursor-pointer"
             >
-              <span className="font-mono text-xs text-white/25 w-6 flex-shrink-0">0{i + 1}</span>
+              <span className="font-mono text-xs text-foreground/25 w-6 flex-shrink-0">0{i + 1}</span>
               <s.icon
                 className="w-7 h-7 sm:w-9 sm:h-9 flex-shrink-0 group-hover:scale-110 transition-all duration-300"
-                style={{ color: "var(--row-c, rgba(255,255,255,0.3))" }}
+                style={{ color: "var(--row-c, rgba(var(--fg-rgb),0.3))" }}
               />
               <span
                 className="font-display text-3xl sm:text-5xl font-bold tracking-tighter group-hover:translate-x-3 transition-all duration-300 flex-1 min-w-0 truncate"
-                style={{ color: "var(--row-c, rgba(255,255,255,0.35))" }}
+                style={{ color: "var(--row-c, rgba(var(--fg-rgb),0.35))" }}
               >
                 {s.name}
               </span>
-              <span className="hidden sm:block font-mono text-sm text-white/30 group-hover:text-white/60 transition-colors duration-300 flex-shrink-0">
+              <span className="hidden sm:block font-mono text-sm text-foreground/30 group-hover:text-foreground/60 transition-colors duration-300 flex-shrink-0">
                 {s.handle}
               </span>
               <ArrowUpRight
                 className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 flex-shrink-0"
-                style={{ color: "var(--row-c, rgba(255,255,255,0.2))" }}
+                style={{ color: "var(--row-c, rgba(var(--fg-rgb),0.2))" }}
               />
             </motion.a>
           ))}
@@ -131,19 +131,19 @@ export default function ContactPage() {
       {/* Footer strip — plain inline, no box */}
       <motion.div
         initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-        className="flex flex-col sm:flex-row sm:items-center gap-4 pt-6 border-t border-white/[0.07]"
+        className="flex flex-col sm:flex-row sm:items-center gap-4 pt-6 border-t border-foreground/[0.07]"
       >
-        <div className="flex items-center gap-2 text-white/45 text-sm flex-shrink-0">
-          <MapPin className="w-4 h-4 text-white/30" />
+        <div className="flex items-center gap-2 text-foreground/45 text-sm flex-shrink-0">
+          <MapPin className="w-4 h-4 text-foreground/30" />
           Chandigarh, India
         </div>
-        <div className="hidden sm:block w-px h-5 bg-white/10" aria-hidden />
+        <div className="hidden sm:block w-px h-5 bg-foreground/10" aria-hidden />
         <div className="flex items-center gap-3">
           <span className="relative flex h-2 w-2 flex-shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <p className="text-sm text-white/55">
+          <p className="text-sm text-foreground/55">
             <span className="text-emerald-300/90 font-medium">Currently available</span> for internships and freelance work — response time faster than my API. Usually.
           </p>
         </div>

@@ -1,19 +1,52 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #09090b;
-  --color-foreground: #ededed;
-  --color-accent: #34d399;
+  /* These resolve to the runtime CSS vars below, which flip with the
+     .dark class. Defining them here lets Tailwind generate bg-background /
+     text-foreground / etc. (with /opacity modifiers) that follow the theme. */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono);
   --font-display: var(--font-display);
 }
 
 @layer base {
+  /* Light theme — the default, applied whenever <html> has no .dark class.
+     --fg-rgb is the ink color as raw channels so inline rgba(var(--fg-rgb), a)
+     in components flips polarity automatically. */
   :root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --fg-rgb: 15, 23, 42;
+    --accent: #059669;
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --card-bg: #ffffff;
+    --card-border: rgba(15, 23, 42, 0.1);
+    --card-border-hover: rgba(15, 23, 42, 0.2);
+    --card-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    /* Ghost outline for the flashlight hero text — needs more alpha on a
+       pale background than white-on-black does to stay perceptible. */
+    --hero-ghost: rgba(15, 23, 42, 0.22);
+    color-scheme: light;
+  }
+
+  /* Dark theme — toggled via the .dark class on <html> (the site default).
+     Nesting .dark on an element (e.g. a terminal window) also forces its
+     subtree dark, so always-dark surfaces stay correct in light mode. */
+  .dark {
     --background: #09090b;
     --foreground: #ffffff;
+    --fg-rgb: 255, 255, 255;
     --accent: #34d399;
+    --glass-bg: rgba(9, 9, 11, 0.6);
+    --card-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012));
+    --card-border: rgba(255, 255, 255, 0.07);
+    --card-border-hover: rgba(255, 255, 255, 0.14);
+    --card-shadow: none;
+    --hero-ghost: rgba(255, 255, 255, 0.08);
+    color-scheme: dark;
   }
 
   html {
@@ -27,11 +60,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
     background: rgba(52, 211, 153, 0.25);
-    color: #ffffff;
+    color: rgb(var(--fg-rgb));
   }
 
   /* Visible focus for keyboard nav (a11y) */
@@ -61,11 +95,11 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.1);
+    background: rgba(var(--fg-rgb), 0.1);
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(var(--fg-rgb), 0.2);
   }
 }
 
@@ -75,15 +109,15 @@
   }
 
   .glass {
-    background: rgba(9, 9, 11, 0.6);
+    background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(var(--fg-rgb), 0.08);
   }
 
   /* Dot grid backdrop with radial fade */
   .bg-dots {
-    background-image: radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(var(--fg-rgb), 0.25) 1px, transparent 1px);
     background-size: 24px 24px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
     -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 100%);
@@ -91,12 +125,12 @@
 
   /* Hairline gradient divider */
   .hairline {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+    background: linear-gradient(90deg, transparent, rgba(var(--fg-rgb), 0.14), transparent);
   }
 
   /* Minimalist Text gradient */
   .text-gradient {
-    background: linear-gradient(180deg, #ffffff 60%, rgba(255,255,255,0.55));
+    background: linear-gradient(180deg, rgb(var(--fg-rgb)) 60%, rgba(var(--fg-rgb), 0.55));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -108,6 +142,10 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+  /* Slightly deeper stops in light mode for contrast on a pale background */
+  html:not(.dark) .text-gradient-accent {
+    background-image: linear-gradient(135deg, #059669, #2563eb);
+  }
 
   /* Subtle emerald glow for key text (OLED-friendly, minimal) */
   .text-glow-accent {
@@ -116,11 +154,12 @@
 
   /* Card surface used across pages */
   .card-surface {
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012));
-    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
   }
   .card-surface:hover {
-    border-color: rgba(255,255,255,0.14);
+    border-color: var(--card-border-hover);
   }
 
   /* Shimmer */
@@ -129,19 +168,83 @@
     100% { background-position: 200% 0; }
   }
   .animate-shimmer {
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+    background: linear-gradient(90deg, transparent, rgba(var(--fg-rgb), 0.04), transparent);
     background-size: 200% 100%;
     animation: shimmer 3s infinite;
   }
 
-  /* Hero name letters light up emerald under the cursor */
+  /* Hero name: at rest, a band of color drifts through each letter,
+     staggered per-letter (animation-delay set inline by index) so it reads
+     as a wave sweeping across the word. On hover the letter snaps to a solid
+     accent glow and the sweep pauses — animated only when NOT hovered. */
+  @keyframes name-sweep {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
   .name-letter {
-    color: #ffffff;
-    transition: color 0.15s ease, text-shadow 0.15s ease;
+    background-image: linear-gradient(
+      100deg,
+      #ffffff 0%,
+      #ffffff 36%,
+      #6ee7b7 44%,
+      #34d399 48%,
+      #60a5fa 52%,
+      #a78bfa 56%,
+      #ffffff 64%,
+      #ffffff 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: name-sweep 5s linear infinite;
+    transition: -webkit-text-fill-color 0.2s ease, color 0.2s ease,
+      text-shadow 0.2s ease;
   }
   .name-letter:hover {
+    -webkit-text-fill-color: #34d399;
     color: #34d399;
-    text-shadow: 0 0 24px rgba(52, 211, 153, 0.5);
+    text-shadow: 0 0 28px rgba(52, 211, 153, 0.55);
+    animation-play-state: paused;
+  }
+
+  /* Light theme: swap the white base for ink so the letters stay legible,
+     keep the same accent band drifting through. Scoped to a non-dark root so
+     the current (forced-dark) site is untouched and a future light theme just
+     works. */
+  html:not(.dark) .name-letter {
+    background-image: linear-gradient(
+      100deg,
+      #0f172a 0%,
+      #0f172a 36%,
+      #059669 44%,
+      #0ea5e9 50%,
+      #7c3aed 56%,
+      #0f172a 64%,
+      #0f172a 100%
+    );
+  }
+  html:not(.dark) .name-letter:hover {
+    -webkit-text-fill-color: #059669;
+    color: #059669;
+    text-shadow: 0 0 24px rgba(5, 150, 105, 0.4);
+  }
+
+  /* Reduced motion: hold a clean, static fill instead of the sweep
+     (the global reduce rule above would otherwise freeze it mid-frame). */
+  @media (prefers-reduced-motion: reduce) {
+    .name-letter {
+      animation: none;
+      background-image: none;
+      -webkit-text-fill-color: #ffffff;
+      color: #ffffff;
+    }
+    html:not(.dark) .name-letter {
+      background-image: none;
+      -webkit-text-fill-color: #0f172a;
+      color: #0f172a;
+    }
   }
 
 

@@ -53,7 +53,7 @@ export function Typewriter({
   return (
     <span className={`inline-flex items-center font-mono ${className}`} aria-label={phrases.join(", ")}>
       <span className="text-emerald-400/70 mr-2" aria-hidden>&gt;</span>
-      <span className="text-white/70">{text}</span>
+      <span className="text-foreground/70">{text}</span>
       <span className="ml-0.5 inline-block w-[0.55em] h-[1.1em] bg-emerald-400/80 animate-caret" aria-hidden />
     </span>
   );

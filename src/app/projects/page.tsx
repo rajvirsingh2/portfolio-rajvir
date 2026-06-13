@@ -26,7 +26,7 @@ export default function ProjectsPage() {
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="text-lg text-white/50 max-w-2xl mb-14"
+        className="text-lg text-foreground/50 max-w-2xl mb-14"
       >
         Featured work spanning backend systems, mobile apps, ML research, and developer tools.
       </motion.p>
@@ -66,26 +66,26 @@ export default function ProjectsPage() {
                   <span className="font-mono text-xs font-bold tracking-widest" style={{ color: `rgba(${project.accent}, 0.9)` }}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[10px] uppercase tracking-widest font-bold text-white/25 font-mono">{project.period}</span>
+                  <span className="text-[10px] uppercase tracking-widest font-bold text-foreground/25 font-mono">{project.period}</span>
                 </div>
-                <h2 className="font-display text-2xl font-bold text-white/90 group-hover:text-white transition-colors duration-200 mb-2">{project.title}</h2>
+                <h2 className="font-display text-2xl font-bold text-foreground/90 group-hover:text-foreground transition-colors duration-200 mb-2">{project.title}</h2>
                 <p className="text-sm font-medium mb-4" style={{ color: `rgba(${project.accent}, 0.8)` }}>{project.tagline}</p>
-                <p className="text-sm text-white/50 leading-relaxed mb-6 flex-grow group-hover:text-white/75 transition-colors duration-200 line-clamp-3">
+                <p className="text-sm text-foreground/50 leading-relaxed mb-6 flex-grow group-hover:text-foreground/75 transition-colors duration-200 line-clamp-3">
                   {project.longDescription[0]}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.slice(0, 4).map((t) => (
-                    <span key={t} className="px-2.5 py-1 text-[10px] uppercase tracking-widest font-semibold rounded-full bg-white/[0.04] border border-white/[0.07] text-white/55 font-mono">
+                    <span key={t} className="px-2.5 py-1 text-[10px] uppercase tracking-widest font-semibold rounded-full bg-foreground/[0.04] border border-foreground/[0.07] text-foreground/55 font-mono">
                       {t}
                     </span>
                   ))}
                   {project.tech.length > 4 && (
-                    <span className="px-2 py-1 text-[10px] text-white/30 font-mono">+{project.tech.length - 4}</span>
+                    <span className="px-2 py-1 text-[10px] text-foreground/30 font-mono">+{project.tech.length - 4}</span>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between text-white/35 group-hover:text-white/70 transition-colors duration-200 mt-auto pt-4 border-t border-white/[0.06]">
+                <div className="flex items-center justify-between text-foreground/35 group-hover:text-foreground/70 transition-colors duration-200 mt-auto pt-4 border-t border-foreground/[0.06]">
                   <div className="flex items-center gap-2 text-sm font-medium">
                     View Project <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                   </div>
@@ -95,7 +95,7 @@ export default function ProjectsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="p-2 -m-2 hover:text-white transition-colors duration-200"
+                      className="p-2 -m-2 hover:text-foreground transition-colors duration-200"
                       aria-label="View Source on GitHub"
                       data-cursor="git clone"
                     >

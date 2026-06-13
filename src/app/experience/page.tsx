@@ -26,7 +26,7 @@ export default function ExperiencePage() {
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="text-lg text-white/50 max-w-2xl mb-14"
+        className="text-lg text-foreground/50 max-w-2xl mb-14"
       >
         Every role, committed. No force-pushes, no rewritten history.
       </motion.p>

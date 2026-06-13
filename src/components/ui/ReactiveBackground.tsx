@@ -39,7 +39,7 @@ export function ReactiveBackground() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center select-none w-full">
           <div
             className="text-[12vw] leading-[0.85] font-black tracking-tighter text-transparent"
-            style={{ WebkitTextStroke: "1px rgba(255,255,255,0.08)" }}
+            style={{ WebkitTextStroke: "1px var(--hero-ghost)" }}
           >
             ENGINEER
             <br />
@@ -55,8 +55,8 @@ export function ReactiveBackground() {
         className="fixed inset-0 z-[1] pointer-events-none transition-opacity duration-300"
         style={{
           background: `
-            radial-gradient(300px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.03), transparent 60%),
-            radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 255, 255, 0.015), transparent 50%)
+            radial-gradient(300px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(var(--fg-rgb), 0.04), transparent 60%),
+            radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(var(--fg-rgb), 0.02), transparent 50%)
           `,
         }}
       />

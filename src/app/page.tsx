@@ -78,6 +78,8 @@ export default function HomePage() {
                 className="inline-block name-letter pb-[0.15em] -mb-[0.15em] cursor-default"
                 style={{
                   whiteSpace: ch === " " ? "pre" : undefined,
+                  // Stagger the color sweep so it ripples letter-by-letter.
+                  animationDelay: `${i * -0.14}s`,
                 }}
                 aria-hidden
               >
@@ -100,10 +102,10 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.85 }}
-            className="text-lg sm:text-xl text-white/60 max-w-2xl font-light leading-relaxed mb-12"
+            className="text-lg sm:text-xl text-foreground/60 max-w-2xl font-light leading-relaxed mb-12"
           >
             Software Engineer & Freelancer crafting{" "}
-            <span className="text-white font-medium font-mono text-sm tracking-tight bg-white/5 border border-white/10 px-2 py-0.5 rounded-md">robust scalable backend systems</span>, polished mobile experiences, and <span className="text-gradient-accent font-medium font-mono text-sm">intelligent ML solutions</span>.
+            <span className="text-foreground font-medium font-mono text-sm tracking-tight bg-foreground/5 border border-foreground/10 px-2 py-0.5 rounded-md">robust scalable backend systems</span>, polished mobile experiences, and <span className="text-gradient-accent font-medium font-mono text-sm">intelligent ML solutions</span>.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -136,7 +138,7 @@ export default function HomePage() {
                 href="/about"
                 data-hover
                 data-cursor="whoami"
-                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/70 text-sm font-medium hover:bg-white/[0.08] hover:border-white/[0.14] hover:text-white transition-all duration-200 font-mono"
+                className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-foreground/[0.04] border border-foreground/[0.08] text-foreground/70 text-sm font-medium hover:bg-foreground/[0.08] hover:border-foreground/[0.14] hover:text-foreground transition-all duration-200 font-mono"
               >
                 About Me <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200" />
               </Link>

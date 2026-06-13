@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Home, User, FolderGit2, Briefcase, Mail } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const links = [
   { href: "/", label: "Home", icon: Home },
@@ -25,14 +26,14 @@ export function Navbar() {
     >
       <Link
         href="/"
-        className="px-2 font-display text-white font-bold text-lg tracking-tight hover:opacity-80 transition-opacity duration-200"
+        className="px-2 font-display text-foreground font-bold text-lg tracking-tight hover:opacity-80 transition-opacity duration-200"
         data-hover
         aria-label="Home"
       >
         RS<span className="text-emerald-400">.</span>
       </Link>
 
-      <div className="w-px h-5 bg-white/10 hidden sm:block" />
+      <div className="w-px h-5 bg-foreground/10 hidden sm:block" />
 
       {/* Desktop */}
       <div className="hidden md:flex items-center gap-1">
@@ -44,13 +45,13 @@ export function Navbar() {
               href={link.href}
               data-hover
               className={`relative px-4 py-2 text-sm font-medium rounded-xl transition-colors duration-200 ${
-                active ? "text-white" : "text-white/40 hover:text-white/80"
+                active ? "text-foreground" : "text-foreground/40 hover:text-foreground/80"
               }`}
             >
               {active && (
                 <motion.div
                   layoutId="nav-active"
-                  className="absolute inset-0 bg-white/[0.07] border border-white/[0.1] rounded-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+                  className="absolute inset-0 bg-foreground/[0.07] border border-foreground/[0.1] rounded-xl shadow-[inset_0_1px_0_rgba(var(--fg-rgb),0.06)]"
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 />
               )}
@@ -72,7 +73,7 @@ export function Navbar() {
               data-hover
               aria-label={link.label}
               className={`relative p-2.5 rounded-xl transition-colors duration-200 ${
-                active ? "text-emerald-300 bg-white/[0.07]" : "text-white/40 hover:text-white/70"
+                active ? "text-emerald-300 bg-foreground/[0.07]" : "text-foreground/40 hover:text-foreground/70"
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -80,6 +81,10 @@ export function Navbar() {
           );
         })}
       </div>
+
+      {/* Theme toggle */}
+      <div className="w-px h-5 bg-foreground/10 hidden sm:block" />
+      <ThemeToggle />
     </motion.nav>
   );
 }

@@ -13,7 +13,7 @@ const items = [
   { name: "Python", icon: SiPython, color: "#3776AB" },
   { name: "PyTorch", icon: SiPytorch, color: "#EE4C2C" },
   { name: "Android", icon: SiAndroid, color: "#3DDC84" },
-  { name: "Next.js", icon: SiNextdotjs, color: "#ffffff" },
+  { name: "Next.js", icon: SiNextdotjs, color: "var(--foreground)" },
   { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
   { name: "Redis", icon: SiRedis, color: "#DC382D" },
   { name: "Docker", icon: SiDocker, color: "#2496ED" },
@@ -44,7 +44,7 @@ export function TechMarquee() {
             {items.map(({ name, icon: Icon, color }) => (
               <span
                 key={`${dup}-${name}`}
-                className="group flex items-center gap-2.5 text-white/30 hover:text-white/70 transition-colors duration-200 cursor-default"
+                className="group flex items-center gap-2.5 text-foreground/30 hover:text-foreground/70 transition-colors duration-200 cursor-default"
               >
                 <Icon className="w-5 h-5 grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300" style={{ color }} />
                 <span className="font-mono text-xs tracking-wider whitespace-nowrap">{name}</span>

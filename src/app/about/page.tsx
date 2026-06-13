@@ -118,18 +118,18 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
         className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[1.08] mb-6 max-w-4xl"
       >
-        <span className="text-white">I build </span>
+        <span className="text-foreground">I build </span>
         <span className="text-gradient-accent">distributed backends</span>
-        <span className="text-white/40">, lead </span>
-        <span className="text-white">mobile teams</span>
-        <span className="text-white/40">, and teach models{" "}</span>
+        <span className="text-foreground/40">, lead </span>
+        <span className="text-foreground">mobile teams</span>
+        <span className="text-foreground/40">, and teach models{" "}</span>
         <span className="text-gradient-accent">not to forget</span>
-        <span className="text-white">.</span>
+        <span className="text-foreground">.</span>
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="text-lg text-white/50 leading-relaxed max-w-2xl mb-6"
+        className="text-lg text-foreground/50 leading-relaxed max-w-2xl mb-6"
       >
         Integrated B.Tech+M.Tech in Information Technology at IIIT Gwalior — researching
         continual learning against evolving deepfakes when not shipping Go services or Android apps.
@@ -150,8 +150,8 @@ export default function AboutPage() {
               <AnimatedNumber value={s.value} decimals={s.decimals ?? 0} suffix={s.suffix ?? ""} />
             </div>
             <div className="h-px w-12 bg-gradient-to-r from-emerald-400/50 to-transparent mb-2 group-hover:w-20 transition-all duration-500" aria-hidden />
-            <p className="text-sm font-medium text-white/70 mb-0.5">{s.label}</p>
-            <p className="text-xs text-white/35">{s.sub}</p>
+            <p className="text-sm font-medium text-foreground/70 mb-0.5">{s.label}</p>
+            <p className="text-xs text-foreground/35">{s.sub}</p>
           </motion.div>
         ))}
       </div>
@@ -159,7 +159,7 @@ export default function AboutPage() {
       {/* ── what I do — pillar cards ── */}
       <div className="mb-24">
         <div className="flex items-center gap-3 mb-8">
-          <h2 className="font-display text-2xl font-bold text-white tracking-tight">What I Do</h2>
+          <h2 className="font-display text-2xl font-bold text-foreground tracking-tight">What I Do</h2>
           <div className="flex-1 h-px hairline opacity-50" aria-hidden />
         </div>
 
@@ -179,10 +179,10 @@ export default function AboutPage() {
                   <span className={a.text}>{p.icon}</span>
                 </div>
                 <div>
-                  <h3 className="font-display text-lg font-semibold text-white mb-1.5 group-hover:text-emerald-400 transition-colors duration-200">
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-1.5 group-hover:text-emerald-400 transition-colors duration-200">
                     {p.title}
                   </h3>
-                  <p className="text-sm text-white/45 leading-relaxed group-hover:text-white/55 transition-colors duration-200">
+                  <p className="text-sm text-foreground/45 leading-relaxed group-hover:text-foreground/55 transition-colors duration-200">
                     {p.body}
                   </p>
                 </div>
@@ -200,7 +200,7 @@ export default function AboutPage() {
         className="mb-24"
       >
         <div className="flex items-center gap-3 mb-10">
-          <h2 className="font-display text-2xl font-bold text-white tracking-tight">Tech Stack</h2>
+          <h2 className="font-display text-2xl font-bold text-foreground tracking-tight">Tech Stack</h2>
           <div className="flex-1 h-px hairline opacity-50" aria-hidden />
         </div>
         <div className="space-y-12">
@@ -210,7 +210,7 @@ export default function AboutPage() {
             return (
               <div key={cat}>
                 <div className="flex items-center gap-3 mb-5">
-                  <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-white/35">{categoryLabels[cat]}</span>
+                  <span className="font-mono text-[11px] tracking-[0.25em] uppercase text-foreground/35">{categoryLabels[cat]}</span>
                   <div className="flex-1 h-px hairline opacity-40" aria-hidden />
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -240,13 +240,13 @@ export default function AboutPage() {
                           aria-hidden
                         />
                         <motion.div
-                          className="relative w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center transition-all duration-300"
+                          className="relative w-10 h-10 rounded-lg bg-foreground/[0.03] border border-foreground/[0.06] flex items-center justify-center transition-all duration-300"
                           style={{ borderColor: undefined }}
                           whileHover={{ scale: 1.15, rotate: 6 }}
                         >
                           <SkillIcon name={skill.name} size="w-5 h-5" />
                         </motion.div>
-                        <span className="relative text-sm font-medium text-white/55 group-hover:text-white/90 transition-colors duration-200 text-center leading-tight">{skill.name}</span>
+                        <span className="relative text-sm font-medium text-foreground/55 group-hover:text-foreground/90 transition-colors duration-200 text-center leading-tight">{skill.name}</span>
                       </motion.div>
                     );
                   })}
@@ -262,10 +262,10 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="flex flex-col items-center justify-center text-center py-12 border-t border-white/5"
+        className="flex flex-col items-center justify-center text-center py-12 border-t border-foreground/5"
       >
-        <h3 className="font-display text-2xl font-bold text-white mb-3">Let&apos;s build something together.</h3>
-        <p className="text-sm text-white/45 max-w-md mb-8">
+        <h3 className="font-display text-2xl font-bold text-foreground mb-3">Let&apos;s build something together.</h3>
+        <p className="text-sm text-foreground/45 max-w-md mb-8">
           Open to internships, collaborations, and interesting conversations about systems, mobile, or ML.
         </p>
         <Magnetic>
@@ -329,7 +329,7 @@ function SkillIcon({ name, size = "w-4 h-4" }: { name: string; size?: string }) 
     "Firebase": <SiFirebase className={`${size} text-[#FFCA28]`} />,
     "Java": <FaJava className={`${size} text-[#5382A1]`} />,
     "C++": <SiCplusplus className={`${size} text-[#00599C]`} />,
-    "REST APIs": <TbApi className={`${size} text-white/60`} />,
+    "REST APIs": <TbApi className={`${size} text-foreground/60`} />,
   };
   return <>{iconMap[name] || <TbApi className={size} />}</>;
 }

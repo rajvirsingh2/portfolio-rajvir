@@ -10,7 +10,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
     <div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
       {/* Back link */}
       <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
-        <Link href="/projects" className="inline-flex items-center gap-2 text-sm text-white/30 hover:text-white/60 transition-colors mb-10" data-hover>
+        <Link href="/projects" className="inline-flex items-center gap-2 text-sm text-foreground/30 hover:text-foreground/60 transition-colors mb-10" data-hover>
           <ArrowLeft className="w-4 h-4" /> All Projects
         </Link>
       </motion.div>
@@ -19,7 +19,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
       <div className="relative mb-14 flex flex-col md:flex-row md:items-center justify-between gap-10">
         {/* Header Text */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="md:w-3/5 relative z-10">
-          <span className="text-[10px] uppercase tracking-widest font-bold text-white/20 mb-3 block font-mono">{project.period}</span>
+          <span className="text-[10px] uppercase tracking-widest font-bold text-foreground/20 mb-3 block font-mono">{project.period}</span>
           <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tighter text-gradient mb-3">{project.title}</h1>
           <p className="text-lg font-medium mb-8" style={{ color: `rgba(${project.accent}, 0.7)` }}>{project.tagline}</p>
         
@@ -37,7 +37,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             )}
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" data-hover
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black text-sm font-semibold hover:bg-white/90 transition-colors shadow-xl"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background text-sm font-semibold hover:bg-foreground/90 transition-colors shadow-xl"
               >
                 {project.slug === 'deepfake-detection' ? 'Read Full Report' : 'Live Demo'} <ArrowUpRight className="w-3 h-3" />
               </a>
@@ -206,7 +206,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 + i * 0.08 }}
-            className="text-white/50 leading-[1.8] text-[15px]"
+            className="text-foreground/50 leading-[1.8] text-[15px]"
           >
             {para}
           </motion.p>
@@ -218,7 +218,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
         className="rounded-2xl card-surface p-8 mb-16"
       >
-        <h2 className="font-display text-xl font-bold text-white mb-6">Key Highlights</h2>
+        <h2 className="font-display text-xl font-bold text-foreground mb-6">Key Highlights</h2>
         <div className="space-y-4">
           {project.highlights.map((h, i) => (
             <motion.div
@@ -229,7 +229,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               className="flex items-start gap-3"
             >
               <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: `rgba(${project.accent}, 0.7)` }} />
-              <span className="text-sm text-white/60 leading-relaxed">{h}</span>
+              <span className="text-sm text-foreground/60 leading-relaxed">{h}</span>
             </motion.div>
           ))}
         </div>
@@ -237,7 +237,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
       {/* Tech Stack */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
-        <h2 className="font-display text-xl font-bold text-white mb-6">Tech Stack</h2>
+        <h2 className="font-display text-xl font-bold text-foreground mb-6">Tech Stack</h2>
         <div className="flex flex-wrap gap-2">
           {project.tech.map((t, i) => (
             <motion.span
@@ -245,7 +245,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.65 + i * 0.04 }}
-              className="px-4 py-2 text-xs uppercase tracking-widest font-bold rounded-xl bg-[#0a0a0a] border border-white/[0.06] text-white/50 hover:text-white/80 hover:border-white/[0.15] transition-all duration-300 cursor-default"
+              className="px-4 py-2 text-xs uppercase tracking-widest font-bold rounded-xl bg-foreground/[0.04] border border-foreground/[0.06] text-foreground/50 hover:text-foreground/80 hover:border-foreground/[0.15] transition-all duration-300 cursor-default"
               data-hover
             >
               {t}
