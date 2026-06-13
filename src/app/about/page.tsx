@@ -3,12 +3,12 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { skills } from "@/lib/data";
-import { 
-  GraduationCap, 
-  Terminal, 
-  Cpu, 
-  Layers, 
-  ShieldCheck, 
+import {
+  GraduationCap,
+  Terminal,
+  Cpu,
+  Layers,
+  ShieldCheck,
   ArrowRight,
   Sparkles
 } from "lucide-react";
@@ -73,14 +73,14 @@ export default function AboutPage() {
       />
 
       <motion.span
-        initial={{ opacity: 0 }} 
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="block font-mono text-xs tracking-[0.3em] uppercase text-emerald-400/70 mb-4"
       >
         ~/about
       </motion.span>
       <motion.h1
-        initial={{ opacity: 0, y: 20 }} 
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="font-display text-5xl md:text-6xl font-bold tracking-tighter text-gradient mb-12"
       >
@@ -173,8 +173,8 @@ export default function AboutPage() {
 
       {/* Education */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         className="relative rounded-xl card-surface p-8 mb-16 overflow-hidden hover:border-blue-500/25 transition-all duration-300 group cursor-default"
       >
@@ -194,8 +194,8 @@ export default function AboutPage() {
 
       {/* Skills grouped by category */}
       <motion.div
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ delay: 0.45 }}
         className="mb-20"
       >
