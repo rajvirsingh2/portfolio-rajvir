@@ -22,10 +22,16 @@ const defaultLines: TerminalLine[] = [
 const VALID_PAGES = ["about", "projects", "experience", "contact", "home"];
 
 function easterEgg(cmd: string): TerminalLine[] | null {
+  if (cmd === "friends") {
+    return [
+      { text: "Friends list:", type: "output" },
+      { text: " - harsh (type 'harsh' to visit his portfolio)", type: "output" },
+    ];
+  }
   if (cmd === "help") {
     return [
       { text: "Available: rajvir | about | projects | experience | contact | home", type: "output" },
-      { text: "Also try: whoami, ls, sudo, coffee, rm -rf /", type: "system" },
+      { text: "Also try: whoami, ls, sudo, coffee, rm -rf /, friends", type: "system" },
     ];
   }
   if (cmd === "rajvir" || cmd === "./rajvir") {
@@ -108,6 +114,16 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
 
       const newHistory: TerminalLine[] = [...history, { text: `$ ${inputValue}`, type: "cmd" }];
       
+      if (cmd === "harsh") {
+        newHistory.push({ text: `> Opening Harsh's portfolio...`, type: "system" });
+        setHistory(newHistory);
+        setInputValue("");
+        setTimeout(() => {
+          window.open("https://portfolio-teal-omega-30.vercel.app/", "_blank", "noopener,noreferrer");
+        }, 500);
+        return;
+      }
+
       if (VALID_PAGES.includes(cmd)) {
         const path = cmd === "home" ? "/" : `/${cmd}`;
         newHistory.push({ text: `> Navigating to ${path}...`, type: "system" });
