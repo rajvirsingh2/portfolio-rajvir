@@ -22,6 +22,9 @@ const defaultLines: TerminalLine[] = [
 const VALID_PAGES = ["about", "projects", "experience", "contact", "home"];
 
 function easterEgg(cmd: string): TerminalLine[] | null {
+  if (cmd === "arshpreet") {
+    return [{ text: "she is in rajvir's heart ❤️", type: "output" }];
+  }
   if (cmd === "help") {
     return [
       { text: "Available: rajvir | about | projects | experience | contact | home", type: "output" },
