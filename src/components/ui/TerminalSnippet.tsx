@@ -26,6 +26,8 @@ function easterEgg(cmd: string): TerminalLine[] | null {
     return [
       { text: "Friends list:", type: "output" },
       { text: " - harsh (type 'harsh' to visit his portfolio)", type: "output" },
+      { text: " - raghav (type 'raghav' to visit his portfolio)", type: "output" },
+      { text: " - anupam (type 'anupam' to visit his portfolio)", type: "output" },
     ];
   }
   if (cmd === "help") {
@@ -120,6 +122,26 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
         setInputValue("");
         setTimeout(() => {
           window.open("https://portfolio-teal-omega-30.vercel.app/", "_blank", "noopener,noreferrer");
+        }, 500);
+        return;
+      }
+
+      if (cmd === "raghav") {
+        newHistory.push({ text: `> Opening Raghav's portfolio...`, type: "system" });
+        setHistory(newHistory);
+        setInputValue("");
+        setTimeout(() => {
+          window.open("https://personal-portfolio-px2f1wgx2-raghavbagdi87-7337s-projects.vercel.app/", "_blank", "noopener,noreferrer");
+        }, 500);
+        return;
+      }
+
+      if (cmd === "anupam") {
+        newHistory.push({ text: `> Opening Anupam's portfolio...`, type: "system" });
+        setHistory(newHistory);
+        setInputValue("");
+        setTimeout(() => {
+          window.open("https://personal-portfolio-three-mu-20.vercel.app/", "_blank", "noopener,noreferrer");
         }, 500);
         return;
       }
