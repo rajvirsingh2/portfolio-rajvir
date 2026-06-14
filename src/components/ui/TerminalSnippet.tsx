@@ -120,7 +120,7 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
         newHistory.push({ text: `> Opening Harsh's portfolio...`, type: "system" });
         setHistory(newHistory);
         setInputValue("");
-        window.open("https://portfolio-teal-omega-30.vercel.app/", "_blank", "noopener,noreferrer");
+        window.location.href = "https://portfolio-teal-omega-30.vercel.app/";
         return;
       }
 
@@ -128,7 +128,7 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
         newHistory.push({ text: `> Opening Raghav's portfolio...`, type: "system" });
         setHistory(newHistory);
         setInputValue("");
-        window.open("https://personal-portfolio-px2f1wgx2-raghavbagdi87-7337s-projects.vercel.app/", "_blank", "noopener,noreferrer");
+        window.location.href = "https://personal-portfolio-px2f1wgx2-raghavbagdi87-7337s-projects.vercel.app/";
         return;
       }
 
@@ -136,7 +136,7 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
         newHistory.push({ text: `> Opening Anupam's portfolio...`, type: "system" });
         setHistory(newHistory);
         setInputValue("");
-        window.open("https://personal-portfolio-three-mu-20.vercel.app/", "_blank", "noopener,noreferrer");
+        window.location.href = "https://personal-portfolio-three-mu-20.vercel.app/";
         return;
       }
 
