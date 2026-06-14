@@ -28,6 +28,7 @@ function easterEgg(cmd: string): TerminalLine[] | null {
       { text: " - harsh (type 'harsh' to visit his portfolio)", type: "output" },
       { text: " - raghav (type 'raghav' to visit his portfolio)", type: "output" },
       { text: " - anupam (type 'anupam' to visit his portfolio)", type: "output" },
+      { text: " - purav (type 'purav' to visit his portfolio)", type: "output" },
     ];
   }
   if (cmd === "help") {
@@ -137,6 +138,14 @@ export function TerminalSnippet({ lines = defaultLines }: { lines?: TerminalLine
         setHistory(newHistory);
         setInputValue("");
         window.location.href = "https://personal-portfolio-three-mu-20.vercel.app/";
+        return;
+      }
+
+      if (cmd === "purav") {
+        newHistory.push({ text: `> Opening Purav's portfolio...`, type: "system" });
+        setHistory(newHistory);
+        setInputValue("");
+        window.location.href = "https://purav-portfolio-ten.vercel.app/";
         return;
       }
 
