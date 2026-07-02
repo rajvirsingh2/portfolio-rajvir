@@ -44,7 +44,7 @@ function easterEgg(cmd: string): TerminalLine[] | null {
       { text: "Class      : Software Engineer [lvl 21] — Backend / Android / ML", type: "output" },
       { text: "Education  : IIIT Gwalior — Integrated B.Tech+M.Tech IT (2022—2027)", type: "output" },
       { text: "Stack      : Kotlin · Go · Python · Jetpack Compose · PyTorch", type: "output" },
-      { text: "Achievement: Amazon ML Summer School '25 — top 3,000 of 80,000+ applicants", type: "success" },
+      { text: "Achievement: Amazon ML Summer School '25 and '26 — top 3,000 of 100,000+ applicants", type: "success" },
       { text: "Research   : Deepfake detection via Continual Learning — 98.9% acc (A-GEM)", type: "output" },
       { text: "Flagship   : Ascend — Go + Redis Streams, <15ms quest completions,", type: "output" },
       { text: "             self-hosted Phi-3 LoRA quest engine. Zero third-party AI APIs.", type: "output" },
